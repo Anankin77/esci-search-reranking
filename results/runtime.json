@@ -10,5 +10,9 @@
   "audit": {
     "seconds": 42.5,
     "finished": "2026-10-20 06:40:05"
+  },
+  "embeddings_train": {
+    "seconds": 6160.2,
+    "finished": "2026-10-20 07:27:17"
   }
 }

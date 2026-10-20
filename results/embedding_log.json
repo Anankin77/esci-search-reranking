@@ -1,0 +1,17 @@
+{
+  "train/query": {
+    "new": 20888,
+    "seconds": 19.1,
+    "texts_per_second": 1094.8
+  },
+  "train/title": {
+    "new": 348274,
+    "seconds": 2433.6,
+    "texts_per_second": 143.1
+  },
+  "train/title_bullets": {
+    "new": 349267,
+    "seconds": 3677.3,
+    "texts_per_second": 95.0
+  }
+}
