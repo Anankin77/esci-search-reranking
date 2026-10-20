@@ -1,5 +1,5 @@
 # data (never committed)
-data/
+/data/
 *.npy
 *.parquet
 # secrets
