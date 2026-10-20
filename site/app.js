@@ -12,7 +12,15 @@ const LABEL_NAMES = { E: "Exact", S: "Substitute", C: "Complement", I: "Irreleva
 let S = null;          // site.json
 let I = null;          // inspector.json
 const charts = {};     // id -> Chart
-const state = { cat: null, outcome: null, bin: null, qid: null, sel: null, testSet: "all" };
+const state = {
+  cat: null, outcome: null, bin: null, qid: null, sel: null, testSet: "all",
+  sort: "az", view: "both", catRef: "bm25_title", exKind: "helps", exAll: false, gain: null,
+};
+const EX_SHOWN = 5;  // examples shown before "show all"
+const ICONS = {
+  sun: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+};
 
 /* ---------------- helpers ---------------- */
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -62,10 +70,17 @@ function initTheme() {
     const next = currentTheme() === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem("theme", next); } catch (e) { /* ignore */ }
+    updateThemeIcons();
     refreshCharts();
     drawLinks();
   }));
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { refreshCharts(); drawLinks(); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { updateThemeIcons(); refreshCharts(); drawLinks(); });
+  updateThemeIcons();
+}
+function updateThemeIcons() {
+  const dark = currentTheme() === "dark";  // icon shows the theme you switch TO
+  $$(".theme-icon").forEach((e) => { e.innerHTML = dark ? ICONS.sun : ICONS.moon; });
+  $$(".theme-label").forEach((e) => { e.textContent = dark ? "Light mode" : "Dark mode"; });
 }
 
 /* ---------------- routing ---------------- */
@@ -77,8 +92,16 @@ function buildNav() {
   });
   nav.addEventListener("click", () => closeMenu());
 }
+function hashParams() {
+  const q = (location.hash.split("?")[1] || "");
+  return Object.fromEntries(new URLSearchParams(q));
+}
 function show() {
   const id = (location.hash || "#question").slice(1).split("?")[0];
+  const params = hashParams();
+  if (id === "inspector" && params.q) {
+    Object.assign(state, { cat: null, outcome: null, bin: null, sel: null, qid: +params.q });
+  }
   const list = pages();
   const idx = Math.max(0, list.findIndex((p) => p.id === id));
   list.forEach((p, i) => p.classList.toggle("active", i === idx));
@@ -140,7 +163,54 @@ function renderTables() {
 
   table("t-runtime", ["Phase", "Seconds"], Object.entries(S.runtime || {}).map(([k, v]) => [k, Math.round(v.seconds).toLocaleString()]), { num: [1] });
   renderExamples();
+  renderGains();
+  renderTakeaways();
   renderConclusion();
+}
+
+function renderGains() {
+  const g = S.extra && S.extra.gain_sensitivity;
+  const box = $("#gain-toggle");
+  if (!g) { box.closest("section").querySelectorAll("#gain-toggle, #t-gains").forEach((e) => e.parentElement.hidden = true); return; }
+  const names = Object.keys(g);
+  if (state.gain == null) state.gain = names[0];
+  box.innerHTML = names.map((n) => `<button class="seg-btn${n === state.gain ? " active" : ""}" data-gain="${esc(n)}">${esc(n.split(" (")[0])}</button>`).join("");
+  $$("button", box).forEach((b) => b.addEventListener("click", () => { state.gain = b.dataset.gain; renderGains(); }));
+  const cur = g[state.gain], base = g[names[0]];
+  const rows = METHOD_ORDER.filter((m) => cur.ndcg[m]).map((m) => ({
+    hl: m === S.cv.chosen.family,
+    cells: [METHOD_LABELS[m], ciText(cur.ndcg[m]), signed(cur.ndcg[m].mean - base.ndcg[m].mean)],
+  }));
+  const d = cur.model_minus_bm25_title;
+  rows.push({ cells: [`<b>${esc(modelName())} − BM25 title</b>`, `<b class="${d.lo > 0 ? "pos" : d.hi < 0 ? "neg" : ""}">${ciSigned(d)}</b>`, signed(d.mean - base.model_minus_bm25_title.mean)] });
+  table("t-gains", [`nDCG with gains ${esc(state.gain.includes("(") ? state.gain.split("(")[1].replace(")", "") : state.gain)}`, "nDCG [95% CI]", "change vs official gains"], rows, { num: [1, 2] });
+}
+
+function renderTakeaways() {
+  const t = S.test.all, bm = S.cv.baselines.bm25_title.ndcg.mean, abl = S.cv.ablation;
+  const d = t.diff["model - bm25_title"].ndcg, rnd = t.table.random.ndcg.mean, bmT = t.table.bm25_title.ndcg.mean;
+  const share = Math.round(100 * (t.table.model.ndcg.mean - bmT) / (bmT - rnd));
+  const lexShare = Math.round(100 * (abl[0].summary.ndcg.mean - bm) / (abl[abl.length - 1].summary.ndcg.mean - bm));
+  const models = ["logreg", "lgbm_pointwise", "lgbm_lambdarank"].map((m) => S.cv.models[m].summary.ndcg.mean);
+  const cats = Object.entries(S.test.categories).filter(([, v]) => !v.analysis_only);
+  const by = (f) => cats.reduce((a, b) => (f(b[1].delta_vs_bm25_title.mean, a[1].delta_vs_bm25_title.mean) ? b : a));
+  const best = by((x, y) => x > y), worst = by((x, y) => x < y);
+  const exact = S.audit.label_mix.total ? S.audit.label_mix.total.E : S.audit.label_mix.train.E;
+  const hours = Object.values(S.runtime || {}).reduce((a, r) => a + r.seconds, 0) / 3600;
+  const enc = t.diff["model - encoder_cosine"];
+  const tk = {
+    question: `Short answer: yes. The model beats BM25 by <b>${signed(d.mean, 3)}</b> nDCG [${signed(d.lo, 3)}, ${signed(d.hi, 3)}], about ${share}% of BM25's own gain over a random order.`,
+    data: `${S.audit.sizes[2].queries.toLocaleString()} hard queries and ${S.audit.sizes[2].pairs.toLocaleString()} labelled pairs; ${pct(exact, 0)} of candidates are Exact, so even a random order scores high.`,
+    preprocessing: `${S.features.length} features computed from query and catalog text only; everything learned from data is fit inside the training fold.`,
+    methods: `Four baselines without learning, three learned models; the ${esc(modelName())} was chosen by a rule fixed before any result.`,
+    evaluation: `In cross-validation, keyword-overlap features alone give ${lexShare}% of the gain over BM25; the three learned models are within ${f4(Math.max(...models) - Math.min(...models), 3)} nDCG of each other.`,
+    results: `On the test split the model beats every baseline: ${signed(d.mean, 3)} over BM25 title${enc ? `, ${signed(enc.ndcg.mean, 3)} over the encoder` : ""}; it wins on ${S.test.win_tie_loss.win.toLocaleString()} queries and loses on ${S.test.win_tie_loss.loss.toLocaleString()}.`,
+    inspector: `Pick a query to compare the two rankings side by side, then click a product to see why the model put it there.`,
+    errors: `The model gains in every category, most on <i>${best[0].replaceAll("_", " ")}</i> (${signed(best[1].delta_vs_bm25_title.mean, 3)}) and least on <i>${worst[0].replaceAll("_", " ")}</i> (${signed(worst[1].delta_vs_bm25_title.mean, 3)}), yet still loses on ${S.test.win_tie_loss.loss.toLocaleString()} individual queries.`,
+    limitations: `The result holds for re-ranking hard, English, pre-retrieved candidates, not for Amazon search in general.`,
+    reproduce: `One command reproduces everything; the full run took about ${hours.toFixed(1)} hours on 4 CPU cores.`,
+  };
+  for (const [k, v] of Object.entries(tk)) { const e = document.getElementById("tk-" + k); if (e) e.innerHTML = v; }
 }
 
 function renderTestTables() {
@@ -157,10 +227,17 @@ function renderTestTables() {
 }
 
 function renderExamples() {
-  for (const kind of ["helps", "hurts"]) {
-    const box = document.getElementById("ex-" + kind);
+  {
+    const kind = state.exKind;
+    const box = $("#ex-list");
     box.innerHTML = "";
-    for (const e of S.examples[kind]) {
+    const all = S.examples[kind];
+    const shown = state.exAll ? all : all.slice(0, EX_SHOWN);
+    const more = $("#ex-more");
+    more.hidden = all.length <= EX_SHOWN;
+    more.textContent = state.exAll ? "Show fewer" : `Show all ${all.length}`;
+    $$("#ex-toggle .seg-btn").forEach((b) => b.classList.toggle("active", b.dataset.kind === kind));
+    for (const e of shown) {
       const li = (x) => `<li><span class="chip ${x.label}">${x.label}</span> ${esc(x.title)}</li>`;
       const d = el("div", { class: "ex" },
         `<div><span class="ex-q" data-qid="${e.query_id}">${esc(e.query)}</span>
@@ -258,7 +335,7 @@ function baseOptions(extra = {}) {
 }
 
 const CHARTS_BY_SECTION = {
-  data: ["c-labels"], evaluation: ["c-ablation", "c-importance"], results: ["c-delta"], errors: ["c-cats"],
+  data: ["c-labels"], evaluation: ["c-ablation", "c-importance", "c-learning", "c-calibration"], results: ["c-delta"], errors: ["c-cats"],
 };
 
 function makeChart(id) {
@@ -324,11 +401,13 @@ function chartConfig(id) {
     return { type: "bar", data: { labels, datasets: [{ data: h.counts, backgroundColor: colors, barPercentage: 1, categoryPercentage: 0.95 }] }, options: o };
   }
   if (id === "c-cats") {
-    const entries = Object.entries(S.test.categories);
+    const key = state.catRef === "encoder" ? "delta_vs_encoder" : "delta_vs_bm25_title";
+    const refName = state.catRef === "encoder" ? "encoder cosine" : "BM25 title";
+    const entries = Object.entries(S.test.categories).filter(([, v]) => v[key]);
     const o = baseOptions({ indexAxis: "y" });
     o.plugins.legend.display = false;
-    o.scales.x.title = { display: true, text: `ΔnDCG vs BM25 title (95% CI)`, color: muted };
-    o.plugins.tooltip.callbacks = { label: (c) => { const v = entries[c.dataIndex][1]; return `Δ ${ciSigned(v.delta_vs_bm25_title)} · ${v.n} queries`; } };
+    o.scales.x.title = { display: true, text: `ΔnDCG vs ${refName} (95% CI)`, color: muted };
+    o.plugins.tooltip.callbacks = { label: (c) => { const v = entries[c.dataIndex][1]; return `Δ ${ciSigned(v[key])} · ${v.n} queries`; } };
     o.onClick = (_, els) => { if (els.length) openInspector({ cat: I ? I.categories.indexOf(entries[els[0].index][0]) : null }); };
     o.onHover = (e, els) => { e.native.target.style.cursor = els.length ? "pointer" : "default"; };
     return {
@@ -336,12 +415,52 @@ function chartConfig(id) {
       data: {
         labels: entries.map(([c, v]) => `${c}${v.analysis_only ? " (analysis only)" : ""} · n=${v.n}`),
         datasets: [{
-          data: entries.map(([, v]) => v.delta_vs_bm25_title.mean),
-          backgroundColor: entries.map(([, v]) => (v.delta_vs_bm25_title.mean >= 0 ? pos : neg)),
-          ci: entries.map(([, v]) => [v.delta_vs_bm25_title.lo, v.delta_vs_bm25_title.hi]),
+          data: entries.map(([, v]) => v[key].mean),
+          backgroundColor: entries.map(([, v]) => (v[key].mean >= 0 ? pos : neg)),
+          ci: entries.map(([, v]) => [v[key].lo, v[key].hi]),
         }],
       },
       options: o, plugins: [ciPlugin],
+    };
+  }
+  if (id === "c-learning" && S.extra && S.extra.learning_curve) {
+    const lc = S.extra.learning_curve;
+    const o = baseOptions();
+    o.scales.y.title = { display: true, text: "CV nDCG", color: muted };
+    o.scales.x.title = { display: true, text: "share of training queries", color: muted };
+    const lo = Math.min(S.extra.learning_curve_bm25_title, ...lc.map((r) => r.ndcg_mean - r.ndcg_std));
+    o.scales.y.min = Math.floor((lo - 0.005) * 100) / 100;
+    o.plugins.tooltip.callbacks = { label: (c) => c.datasetIndex === 0
+      ? `${f4(c.raw)} ± ${f4(lc[c.dataIndex].ndcg_std)} (${lc[c.dataIndex].n_train_queries_per_fold.toLocaleString()} queries per fold)`
+      : `BM25 title: ${f4(c.raw)}` };
+    return {
+      type: "line",
+      data: {
+        labels: lc.map((r) => pct(r.fraction, 0)),
+        datasets: [
+          { label: "LambdaRank", data: lc.map((r) => r.ndcg_mean), borderColor: accent, backgroundColor: accent, pointRadius: 4,
+            ci: lc.map((r) => [r.ndcg_mean - r.ndcg_std, r.ndcg_mean + r.ndcg_std]) },
+          { label: "BM25 title", data: lc.map(() => S.extra.learning_curve_bm25_title), borderColor: muted, borderDash: [6, 4], pointRadius: 0 },
+        ],
+      },
+      options: o, plugins: [ciPlugin],
+    };
+  }
+  if (id === "c-calibration" && S.extra && S.extra.calibration) {
+    const b = S.extra.calibration.bins;
+    const o = baseOptions();
+    o.scales.x = { type: "linear", min: 0, max: 1, title: { display: true, text: "predicted P(Exact)", color: muted }, ticks: { color: muted }, grid: { color: cssVar("--border") } };
+    o.scales.y.min = 0; o.scales.y.max = 1;
+    o.scales.y.title = { display: true, text: "observed share Exact", color: muted };
+    o.plugins.tooltip.callbacks = { label: (c) => c.datasetIndex === 0
+      ? `predicted ${f4(c.raw.x, 3)} → observed ${f4(c.raw.y, 3)} (${b[c.dataIndex].n.toLocaleString()} pairs)` : "perfect calibration" };
+    return {
+      type: "line",
+      data: { datasets: [
+        { label: "Logistic regression (OOF)", data: b.map((r) => ({ x: r.mean_pred, y: r.frac_exact })), borderColor: accent, backgroundColor: accent, pointRadius: 4 },
+        { label: "perfect", data: [{ x: 0, y: 0 }, { x: 1, y: 1 }], borderColor: muted, borderDash: [6, 4], pointRadius: 0 },
+      ] },
+      options: o,
     };
   }
   return null;
@@ -371,8 +490,14 @@ function filteredQueries() {
 
 function openInspector(opts) {
   Object.assign(state, { cat: null, outcome: null, bin: null, qid: null, sel: null }, opts);
-  if (location.hash !== "#inspector") location.hash = "inspector";
-  else renderInspector();
+  const target = state.qid != null ? `#inspector?q=${state.qid}` : "#inspector";
+  if (!location.hash.startsWith("#inspector")) location.hash = target.slice(1);
+  else { history.replaceState(null, "", target); renderInspector(); }
+}
+
+function setQueryUrl() {
+  // keep the address bar shareable without triggering a hashchange
+  if (state.qid != null && location.hash.startsWith("#inspector")) history.replaceState(null, "", `#inspector?q=${state.qid}`);
 }
 
 function buildChips() {
@@ -399,14 +524,24 @@ function buildChips() {
 function renderInspector() {
   buildChips();
   const list = filteredQueries();
+  if (state.sort === "desc") list.sort((a, b) => b.d - a.d);
+  else if (state.sort === "asc") list.sort((a, b) => a.d - b.d);
   $("#qlist-count").textContent = `${list.length.toLocaleString()} queries`;
-  if (state.qid == null || !list.some((q) => q.id === state.qid)) state.qid = list.length ? list[0].id : null;
+  $("#q-sort").value = state.sort;
+  if (state.qid == null || !list.some((q) => q.id === state.qid)) {
+    // a deep-linked query outside the current filters still opens
+    if (!(state.qid != null && I.queries.some((q) => q.id === state.qid) && state.cat == null && state.outcome == null && state.bin == null)) {
+      state.qid = list.length ? list[0].id : null;
+    }
+  }
+  setQueryUrl();
   const ul = $("#qlist");
   ul.innerHTML = "";
   list.slice(0, 400).forEach((q) => {
     const li = el("li", { "data-id": q.id, class: q.id === state.qid ? "active" : "" },
       `<span>${esc(q.q)}</span><span class="d ${q.d > 0 ? "pos" : q.d < 0 ? "neg" : "muted"}">${signed(q.d, 3)}</span>`);
     li.addEventListener("click", () => { state.qid = q.id; state.sel = null; renderInspector(); });
+    if (q.id === state.qid) requestAnimationFrame(() => li.scrollIntoView({ block: "nearest" }));
     ul.appendChild(li);
   });
   if (list.length > 400) ul.appendChild(el("li", { class: "muted" }, `… ${list.length - 400} more — use search or filters`));
@@ -419,15 +554,30 @@ function renderQuery() {
   const cats = q.c.map((i) => `<span class="fchip">${I.categories[i].replaceAll("_", " ")}</span>`).join(" ");
   $("#q-head").innerHTML = `<div class="q">${esc(q.q)}</div>
     <div class="scores"><span>nDCG BM25 <b>${f4(q.nb, 3)}</b></span><span>nDCG ${esc(modelName())} <b>${f4(q.nm, 3)}</b></span>
-    <span>Δ <b class="${q.d > 0 ? "pos" : q.d < 0 ? "neg" : ""}">${signed(q.d, 3)}</b></span><span>${q.p.length} candidates</span></div>
+    <span>Δ <b class="${q.d > 0 ? "pos" : q.d < 0 ? "neg" : ""}">${signed(q.d, 3)}</b></span><span>${q.p.length} candidates</span>
+    <button class="fchip" id="copy-link" type="button">Copy link</button></div>
     <div class="chips" style="margin-top:.35rem">${cats}</div>`;
-  const item = (p, i, rank) => `<li class="prod${state.sel === i ? " sel" : ""}" data-i="${i}">
+  $("#copy-link").addEventListener("click", async (ev) => {
+    const url = `${location.origin}${location.pathname}#inspector?q=${q.id}`;
+    try { await navigator.clipboard.writeText(url); ev.target.textContent = "Link copied"; }
+    catch (e) { prompt("Copy this link:", url); }
+  });
+  const badge = (p) => {
+    const move = p[3] - p[4];  // positive = moved up in the model's ranking
+    if (move === 0) return `<span class="mv same" title="same rank as BM25">=</span>`;
+    return `<span class="mv ${move > 0 ? "up" : "down"}" title="BM25 rank ${p[3]}">${move > 0 ? "↑" : "↓"}${Math.abs(move)}</span>`;
+  };
+  const item = (p, i, rank, withBadge) => `<li class="prod${state.sel === i ? " sel" : ""}" data-i="${i}">
       <span class="rk">${rank}</span><span><span class="chip ${p[2]}" title="${LABEL_NAMES[p[2]]}">${p[2]}</span></span>
-      <span><span class="t">${esc(p[0])}</span><span class="b">${esc(p[1] || "no brand")}</span></span></li>`;
+      <span><span class="t">${esc(p[0])}</span><span class="b">${esc(p[1] || "no brand")}${withBadge ? " " + badge(p) : ""}</span></span></li>`;
   const idx = q.p.map((_, i) => i);
-  $("#col-bm25").innerHTML = [...idx].sort((a, b) => q.p[a][3] - q.p[b][3]).map((i) => item(q.p[i], i, q.p[i][3])).join("");
-  $("#col-model").innerHTML = [...idx].sort((a, b) => q.p[a][4] - q.p[b][4]).map((i) => item(q.p[i], i, q.p[i][4])).join("");
-  $$("#rankings .prod").forEach((li) => li.addEventListener("click", () => { state.sel = +li.dataset.i; renderQuery(); }));
+  $("#col-bm25").innerHTML = [...idx].sort((a, b) => q.p[a][3] - q.p[b][3]).map((i) => item(q.p[i], i, q.p[i][3], false)).join("");
+  $("#col-model").innerHTML = [...idx].sort((a, b) => q.p[a][4] - q.p[b][4]).map((i) => item(q.p[i], i, q.p[i][4], true)).join("");
+  $$("#rankings .prod").forEach((li) => {
+    li.addEventListener("click", () => { state.sel = +li.dataset.i; renderQuery(); });
+    li.addEventListener("mouseenter", () => hoverProduct(li.dataset.i, true));
+    li.addEventListener("mouseleave", () => hoverProduct(li.dataset.i, false));
+  });
   requestAnimationFrame(drawLinks);
   renderContrib(q);
 }
@@ -448,9 +598,14 @@ function drawLinks() {
   q.p.forEach((p, i) => {
     const y1 = centre("col-bm25", i), y2 = centre("col-model", i);
     if (y1 == null || y2 == null) return;
-    lines += `<line x1="0" y1="${y1}" x2="${w}" y2="${y2}" stroke="${cssVar("--" + p[2])}" class="${state.sel === i ? "sel" : ""}"/>`;
+    lines += `<line x1="0" y1="${y1}" x2="${w}" y2="${y2}" stroke="${cssVar("--" + p[2])}" data-i="${i}" class="${state.sel === i ? "sel" : ""}"/>`;
   });
   svg.innerHTML = lines;
+}
+
+function hoverProduct(i, on) {
+  $$(`#rankings [data-i="${i}"]`).forEach((e) => e.classList.toggle("hov", on));
+  $("#rankings").classList.toggle("hovering", on);
 }
 
 function renderContrib(q) {
@@ -511,6 +666,27 @@ async function init() {
     $$("#nd-toggle .seg-btn").forEach((x) => x.classList.toggle("active", x === b));
     renderTestTables();
   }));
+  $("#q-sort").addEventListener("change", (e) => { state.sort = e.target.value; renderInspector(); });
+  $("#q-random").addEventListener("click", () => {
+    const list = filteredQueries();
+    if (!list.length) return;
+    state.qid = list[Math.floor(Math.random() * list.length)].id;  // browsing aid only, not used in any metric
+    state.sel = null;
+    renderInspector();
+  });
+  $$("#view-switch .seg-btn").forEach((b) => b.addEventListener("click", () => {
+    state.view = b.dataset.view;
+    $$("#view-switch .seg-btn").forEach((x) => x.classList.toggle("active", x === b));
+    $("#rankings").dataset.view = state.view;
+    requestAnimationFrame(drawLinks);
+  }));
+  $$("#cat-toggle .seg-btn").forEach((b) => b.addEventListener("click", () => {
+    state.catRef = b.dataset.ref;
+    $$("#cat-toggle .seg-btn").forEach((x) => x.classList.toggle("active", x === b));
+    makeChart("c-cats");
+  }));
+  $$("#ex-toggle .seg-btn").forEach((b) => b.addEventListener("click", () => { state.exKind = b.dataset.kind; state.exAll = false; renderExamples(); }));
+  $("#ex-more").addEventListener("click", () => { state.exAll = !state.exAll; renderExamples(); });
   show();
   try {
     const [s, i] = await Promise.all([fetch("data/site.json").then((r) => r.json()), fetch("data/inspector.json").then((r) => r.json())]);

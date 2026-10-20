@@ -14,7 +14,7 @@
 <header class="topbar">
   <button id="menu-btn" class="icon-btn" aria-label="Open menu" aria-expanded="false">☰</button>
   <span class="topbar-title">When keyword matching fails</span>
-  <button class="icon-btn theme-btn" aria-label="Toggle dark mode">◐</button>
+  <button class="icon-btn theme-btn" aria-label="Toggle dark mode"><span class="theme-icon"></span></button>
 </header>
 <div id="scrim" class="scrim" hidden></div>
 
@@ -25,7 +25,7 @@
   </div>
   <nav id="nav" aria-label="Sections"></nav>
   <div class="sidebar-foot">
-    <button class="theme-btn link-btn" aria-label="Toggle dark mode">◐ Theme</button>
+    <button class="theme-btn link-btn" aria-label="Toggle dark mode"><span class="theme-icon"></span> <span class="theme-label">Theme</span></button>
     <div class="muted small">ES 335 · Vishaw Raj Meena (24110388)</div>
   </div>
 </aside>
@@ -36,15 +36,17 @@
 <!-- 1 ─────────────────────────────────────────── -->
 <section id="question" class="page" data-title="Question">
   <h1>When does keyword matching fail?</h1>
+  <p class="takeaway" id="tk-question"></p>
   <p class="lead">For difficult English shopping queries, does a learning-to-rank model built on interpretable
     query–product features order candidate products better than the BM25 keyword ranker? And which kinds of
     queries does each method get wrong?</p>
   <div class="kpis">
-    <div class="kpi"><div class="kpi-label">Random order</div><div class="kpi-value" data-v="test.all.table.random.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
-    <div class="kpi"><div class="kpi-label">BM25 on title</div><div class="kpi-value" data-v="test.all.table.bm25_title.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
-    <div class="kpi accent"><div class="kpi-label"><span data-model-name></span></div><div class="kpi-value" data-v="test.all.table.model.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
-    <div class="kpi"><div class="kpi-label">Model − BM25</div><div class="kpi-value" data-v="test.all.diff.model - bm25_title.ndcg.mean" data-sign></div><div class="kpi-sub">95% CI <span data-ci-range="test.all.diff.model - bm25_title.ndcg"></span></div></div>
+    <a class="kpi" href="#results"><div class="kpi-label">Random order</div><div class="kpi-value" data-v="test.all.table.random.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></a>
+    <a class="kpi" href="#results"><div class="kpi-label">BM25 on title</div><div class="kpi-value" data-v="test.all.table.bm25_title.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></a>
+    <a class="kpi accent" href="#results"><div class="kpi-label"><span data-model-name></span> <span class="tag">chosen</span></div><div class="kpi-value" data-v="test.all.table.model.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></a>
+    <a class="kpi" href="#errors"><div class="kpi-label">Model − BM25</div><div class="kpi-value" data-v="test.all.diff.model - bm25_title.ndcg.mean" data-sign></div><div class="kpi-sub">95% CI <span data-ci-range="test.all.diff.model - bm25_title.ndcg"></span></div></a>
   </div>
+  <p class="muted small kpi-hint">Click a tile for the full results.</p>
   <h2>Setup in one paragraph</h2>
   <p>Each query comes with about <span data-v="audit.sizes.2.cand_median" data-f="0"></span> candidate products that
     Amazon already retrieved, each labelled by a person as <span class="chip E">E</span> Exact,
@@ -63,6 +65,7 @@
 <!-- 2 ─────────────────────────────────────────── -->
 <section id="data" class="page" data-title="Data">
   <h1>Data</h1>
+  <p class="takeaway" id="tk-data"></p>
   <p><b>Amazon Shopping Queries Dataset (ESCI)</b> — Reddy et al., 2022, <i>“Shopping Queries Dataset: A Large-Scale
     ESCI Benchmark for Improving Product Search”</i>, <a href="https://arxiv.org/abs/2206.06588">arXiv:2206.06588</a>.
     Licence: <b>Apache-2.0</b>. Source: <a href="https://github.com/amazon-science/esci-data">github.com/amazon-science/esci-data</a>.
@@ -96,6 +99,7 @@
 <!-- 3 ─────────────────────────────────────────── -->
 <section id="preprocessing" class="page" data-title="Preprocessing">
   <h1>Preprocessing and features</h1>
+  <p class="takeaway" id="tk-preprocessing"></p>
   <h2>Text cleaning</h2>
   <ol>
     <li>Strip HTML tags and entities; Unicode NFKC; collapse whitespace.</li>
@@ -115,6 +119,7 @@
 <!-- 4 ─────────────────────────────────────────── -->
 <section id="methods" class="page" data-title="Baselines &amp; Methods">
   <h1>Baselines and methods</h1>
+  <p class="takeaway" id="tk-methods"></p>
   <h2>Baselines (no learning)</h2>
   <ol>
     <li><b>Random order</b>, averaged over 20 seeds — the floor.</li>
@@ -142,6 +147,7 @@
 <!-- 5 ─────────────────────────────────────────── -->
 <section id="evaluation" class="page" data-title="Evaluation">
   <h1>Evaluation</h1>
+  <p class="takeaway" id="tk-evaluation"></p>
   <h2>Metrics</h2>
   <ul>
     <li><b>nDCG (full list, primary)</b> — official ESCI metric; gains E = 1, S = 0.1, C = 0.01, I = 0; discount log2(rank + 1).</li>
@@ -158,11 +164,19 @@
   <h2>What the model relies on</h2>
   <p class="muted">LambdaRank, mean |SHAP| (LightGBM <code>pred_contrib</code>) on validation folds, top 15.</p>
   <div class="chart-box tall"><canvas id="c-importance"></canvas></div>
+  <h2>How many labelled queries does it need? <span class="tag">extra</span></h2>
+  <p class="muted">LambdaRank trained on 10–100% of each fold's training queries (CV mean ± std), against BM25 title.</p>
+  <div class="chart-box"><canvas id="c-learning"></canvas></div>
+  <h2>Are logistic-regression probabilities calibrated? <span class="tag">extra</span></h2>
+  <p class="muted">Out-of-fold P(Exact) vs observed share of Exact products; the dashed line is perfect calibration.
+    Brier score <span data-v="extra.calibration.brier"></span> (base rate: <span data-v="extra.calibration.brier_base_rate"></span>).</p>
+  <div class="chart-box square"><canvas id="c-calibration"></canvas></div>
 </section>
 
 <!-- 6 ─────────────────────────────────────────── -->
 <section id="results" class="page" data-title="Results">
   <h1>Test results</h1>
+  <p class="takeaway" id="tk-results"></p>
   <p>Official test split, <span data-v="test.n_test_queries" data-f="0"></span> queries, scored once.
     Brackets: 95% bootstrap CIs (1,000 resamples of queries, the same resamples for every method, so differences are paired).</p>
   <div class="seg" role="tablist" id="nd-toggle">
@@ -176,13 +190,18 @@
     <b data-v="test.win_tie_loss.tie" data-f="0"></b> / <b data-v="test.win_tie_loss.loss" data-f="0"></b>.
     <span class="muted">Click a bar to open those queries in the inspector.</span></p>
   <div class="chart-box"><canvas id="c-delta"></canvas></div>
+  <h2>What if Substitutes counted more? <span class="tag">post-hoc</span></h2>
+  <p class="muted">Same frozen rankings, different gains in the metric. Chosen after seeing the test results, so descriptive only.</p>
+  <div class="seg" role="tablist" id="gain-toggle"></div>
+  <div class="table-wrap"><table id="t-gains"></table></div>
 </section>
 
 <!-- 7 ─────────────────────────────────────────── -->
 <section id="inspector" class="page wide" data-title="Query Inspector">
   <h1>Query inspector</h1>
+  <p class="takeaway" id="tk-inspector"></p>
   <p class="muted">A stratified sample of <span data-v="inspector_meta.n_queries" data-f="0"></span> test queries.
-    Lines connect the same product in both rankings. Click a product to see why the model placed it there.</p>
+    Lines connect the same product in both rankings; ↑ / ↓ show how far the model moved it from its BM25 rank.</p>
   <div class="insp-controls">
     <div class="search">
       <input id="q-search" type="search" placeholder="Search test queries…" autocomplete="off" aria-label="Search test queries">
@@ -193,11 +212,22 @@
   </div>
   <div class="insp-layout">
     <div class="qlist-box">
-      <div class="small muted" id="qlist-count"></div>
+      <div class="qlist-head">
+        <span class="small muted" id="qlist-count"></span>
+        <select id="q-sort" aria-label="Sort queries">
+          <option value="az">A–Z</option><option value="desc">Δ high → low</option><option value="asc">Δ low → high</option>
+        </select>
+        <button id="q-random" class="fchip" type="button" title="Open a random query">Random</button>
+      </div>
       <ul id="qlist" class="qlist"></ul>
     </div>
     <div class="insp-main">
       <div id="q-head" class="q-head"></div>
+      <div class="seg view-switch" id="view-switch">
+        <button class="seg-btn active" data-view="both">Both</button>
+        <button class="seg-btn" data-view="bm25">BM25</button>
+        <button class="seg-btn" data-view="model">Model</button>
+      </div>
       <div id="rankings" class="rankings">
         <div class="rank-col"><h3>BM25 title</h3><ol id="col-bm25"></ol></div>
         <svg id="links" class="links" aria-hidden="true"></svg>
@@ -211,19 +241,28 @@
 <!-- 8 ─────────────────────────────────────────── -->
 <section id="errors" class="page" data-title="Errors">
   <h1>Where each method fails</h1>
+  <p class="takeaway" id="tk-errors"></p>
   <p>ΔnDCG of the chosen model vs BM25-title per query category, with 95% CIs. Categories are rule-based taggers on the
     query text; <i>substitute_heavy</i> uses labels and is analysis-only. <span class="muted">Click a bar to filter the inspector.</span></p>
+  <div class="seg" role="tablist" id="cat-toggle">
+    <button class="seg-btn active" data-ref="bm25_title">vs BM25 title</button>
+    <button class="seg-btn" data-ref="encoder">vs encoder cosine</button>
+  </div>
   <div class="chart-box"><canvas id="c-cats"></canvas></div>
   <div class="table-wrap"><table id="t-cats"></table></div>
-  <h2>Where the model helps most</h2>
-  <div id="ex-helps" class="examples"></div>
-  <h2>Where the model hurts most</h2>
-  <div id="ex-hurts" class="examples"></div>
+  <h2>Biggest wins and losses</h2>
+  <div class="seg" role="tablist" id="ex-toggle">
+    <button class="seg-btn active" data-kind="helps">Helps most</button>
+    <button class="seg-btn" data-kind="hurts">Hurts most</button>
+  </div>
+  <div id="ex-list" class="examples"></div>
+  <button id="ex-more" class="fchip more-btn" type="button"></button>
 </section>
 
 <!-- 9 ─────────────────────────────────────────── -->
 <section id="limitations" class="page" data-title="Limitations">
   <h1>Limitations</h1>
+  <p class="takeaway" id="tk-limitations"></p>
   <ul>
     <li><b>Re-ranking only.</b> The candidates were pre-retrieved by Amazon, so retrieval errors are invisible.</li>
     <li><b>Noisy labels.</b> Labels are human judgments with noise and ambiguity, especially Substitute vs Exact.</li>
@@ -241,12 +280,14 @@
 <!-- 10 ────────────────────────────────────────── -->
 <section id="conclusion" class="page" data-title="Conclusion">
   <h1>Conclusion</h1>
+  <p class="takeaway" id="tk-conclusion"></p>
   <div id="conclusion-body"></div>
 </section>
 
 <!-- 11 ────────────────────────────────────────── -->
 <section id="reproduce" class="page" data-title="Reproduce">
   <h1>Reproduce</h1>
+  <p class="takeaway" id="tk-reproduce"></p>
   <pre><code>git clone &lt;this repo&gt; &amp;&amp; cd esci-search-reranking
 python -m venv .venv &amp;&amp; source .venv/bin/activate
 pip install -r requirements.txt

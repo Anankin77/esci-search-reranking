@@ -5,12 +5,26 @@
     "links_drawn": 15,
     "contribution_bars": 5,
     "category_filter_count": "485 queries",
-    "category_click_opens": "#inspector",
+    "category_click_opens": "#inspector?q=18",
     "delta_click_opens": [
-      "#inspector",
+      "#inspector?q=101",
       "\u0394 bin +0.00 \u2026 +0.05 clear \u00d7"
     ],
     "ablation_chart": true,
-    "mobile_menu_navigates": "#inspector"
+    "learning_and_calibration_charts": true,
+    "kpi_tile_opens": "#results",
+    "gain_toggle_header": "nDCG with gains E=1, S=0.5, C=0.25\tnDCG [95% CI]\tchange vs official gains\n",
+    "deep_link_opens_query": true,
+    "rank_badges": 16,
+    "hover_highlights_pair": 2,
+    "sort_desc_ok": true,
+    "random_changes_url": true,
+    "examples_tabs_show_more": [
+      5,
+      15
+    ],
+    "category_toggle_encoder": "\u0394nDCG vs encoder cosine (95% CI)",
+    "mobile_menu_navigates": "#inspector?q=113",
+    "phone_model_only_view": true
   }
 }
