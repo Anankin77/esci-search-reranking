@@ -14,5 +14,9 @@
   "embeddings_train": {
     "seconds": 6160.2,
     "finished": "2026-10-20 07:27:17"
+  },
+  "features_static_train": {
+    "seconds": 656.5,
+    "finished": "2026-10-20 07:38:27"
   }
 }
