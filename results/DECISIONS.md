@@ -89,3 +89,4 @@ One numbered line per judgment call, with a one-line reason. Appended in build o
 74. Conclusion text on the site is assembled in JavaScript from `site.json`, with only qualitative statements hand-written — rule "no hand-typed numbers".
 75. Site tested with the pre-installed headless Chromium at 390 × 844 and 1280 × 900, light and dark; the check fails on console errors or horizontal overflow (a long brand name overflowed at 390 px and was fixed) — spec §7.
 76. Chart.js 4.4.1 from cdnjs is the only external dependency; CI whiskers are drawn by a 30-line plugin instead of an error-bar library — fewer dependencies.
+77. Fresh-clone smoke test run from the GitHub copy of `main` in a new venv: 407 s end to end including the 1.1 GB download; processing alone 326 s, just over the 5-minute target because CPU embedding dominates — recorded rather than shrinking the sample below the requested 500 queries.

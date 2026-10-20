@@ -57,10 +57,21 @@ hardest for both methods; the typical large loss is semantic similarity promotin
 - Freeze: Report 2 committed at 2026-10-20 08:02 (`3024bcb`); test scored once at 08:42 (`results/test_run_log.json`).
 - Site: headless Chromium at 390 px and 1280 px, light and dark — no console errors, no horizontal overflow, all four interactions
   pass (`results/screenshots/check.json`); site data 6.2 MB.
-- Fresh-clone smoke test: see the section below.
+- Fresh-clone smoke test: passed (section below).
 - Full run time on 4 CPU cores ≈ 3.1 h, dominated by the encoder (1.7 h train, ~0.6 h test) — `results/runtime.json`.
 
-<!-- FRESH-CLONE -->
+## Fresh-clone smoke test (spec §8)
+
+`git clone` of `main` at `fbf4739` from GitHub into an empty folder, new virtual environment, `pip install -r requirements.txt`
+(2 min 17 s), then `python run_all.py --sample 500` → **all 10 phases succeeded in 407 s** (6 min 47 s), and `pytest` →
+39 passed in the clean environment. The download included the full 1.1 GB products file and hit one connection reset,
+which the resume logic recovered from (81 s). Excluding the download, processing took 326 s (≈ 5.4 min) — slightly over
+the 5-minute target, mostly embedding the sample's ~10k titles and title+bullets texts on CPU (145 s).
+
+| download | build | audit | embed | features | baselines | train | test | extra | site |
+|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 81 s | 16 s | 4 s | 145 s | 19 s | 2 s | 41 s | 89 s | 8 s | 1 s |
+
 
 ## Known issues
 
