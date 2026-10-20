@@ -286,7 +286,7 @@ def write_report(paths: RunPaths, res: dict) -> str:
     if ce and "methods" in ce:
         md += ["", "## 5. Optional reference: zero-shot cross-encoder (not a candidate for selection)", "",
                f"`{CROSS_ENCODER_NAME}` on a subsample of {ce['n_queries']} training queries "
-               f"({ce['n_pairs']:,} pairs, {ce['pairs_per_second']} pairs/s on CPU), compared with the "
+               f"({ce['n_pairs']:,} pairs; throughput in `cv_results.json`), compared with the "
                "out-of-fold scores of other methods on the same queries.", "",
                "| Method | nDCG | nDCG@5 | Exact-P@1 |", "|---|---|---|---|"]
         for name, s in ce["methods"].items():
