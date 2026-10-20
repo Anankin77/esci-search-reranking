@@ -17,6 +17,26 @@ leakage-safe protocol, and open the test split exactly once.
 - Website: `site/` (GitHub Pages, see below)
 
 <!-- RESULTS-START -->
+## Results summary
+
+Official test split (8,956 queries), scored once after the model was frozen; 95 % paired bootstrap CIs.
+
+| Method | nDCG | nDCG@5 | Exact-P@1 |
+|---|---|---|---|
+| Random (20 seeds) | 0.747 [0.744, 0.750] | 0.502 | 0.436 |
+| BM25 title | 0.818 [0.814, 0.821] | 0.638 | 0.620 |
+| BM25 all fields | 0.820 [0.817, 0.824] | 0.645 | 0.623 |
+| Encoder cosine (zero-shot) | 0.828 [0.825, 0.831] | 0.658 | 0.640 |
+| Logistic regression | 0.850 [0.847, 0.853] | 0.704 | 0.701 |
+| **LightGBM pointwise (chosen)** | **0.854 [0.851, 0.857]** | **0.713** | **0.716** |
+| LightGBM LambdaRank | 0.854 [0.851, 0.857] | 0.712 | 0.714 |
+
+- Chosen model − BM25-title: **+0.036 nDCG [0.034, 0.039]**, about half of BM25's own gain over random; Exact-P@1 +9.6 points.
+  Unchanged without the 101 near-duplicate test queries.
+- Lexical features carry most of the gain; attribute/numeric/negation and semantic features add the rest; the learning
+  algorithm matters little (pointwise ≈ LambdaRank, by the pre-registered rule the simpler pointwise model was chosen).
+- The model gains in every query category; smallest gains on colour and long queries, and its typical large loss is a
+  semantically related item promoted above an exact keyword match. Details in [Report 3](results/report_3_test.md).
 <!-- RESULTS-END -->
 
 ## Setup
