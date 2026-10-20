@@ -86,6 +86,5 @@ the 5-minute target, mostly embedding the sample's ~10k titles and title+bullets
 ## What remains to be done by hand
 
 1. Enable GitHub Pages: repository **Settings → Pages → Source: GitHub Actions** (the workflow runs on every push to `main`;
-   until Pages is enabled its deploy step fails).
-2. Delete the leftover remote branch `ccr-d515e1c4-utamtm` (same commit history as `main`; the build environment could not delete it).
-3. Reviewer checklist (§12 D–E): open ~10 random queries in the inspector; read every DECISIONS line and VIVA answer.
+   until Pages is enabled its deploy step fails), then open the site on a phone and a laptop.
+2. Reviewer checklist (§12 D–E): open ~10 random queries in the inspector; read every DECISIONS line and VIVA answer.
