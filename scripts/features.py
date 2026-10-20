@@ -225,18 +225,32 @@ def normalize_brand(brand: str) -> str:
     return " ".join(toks)
 
 
+MIN_BRAND_DISTINCTIVENESS = 0.3
+
+
 def fit_brand_vocab(products: pd.DataFrame, min_products: int = 2) -> frozenset[str]:
     """Brands of at least `min_products` distinct training products, excluding
-    placeholders, colours, stopwords, pure numbers and very short strings."""
+    placeholders, colours, stopwords, pure numbers and very short strings, and
+    keeping only *distinctive* brand names: among training titles that contain the
+    name, at least 30 % must belong to that brand. This drops brand names that are
+    ordinary words ('without', 'premium', 'box') and uses no labels."""
     p = products.drop_duplicates("product_id")
-    counts = p["brand"].map(normalize_brand).value_counts()
-    keep = [
+    brands = p["brand"].map(normalize_brand)
+    counts = brands.value_counts()
+    candidates = frozenset(
         b for b, n in counts.items()
         if n >= min_products and len(b) >= 3 and b not in BRAND_STOPLIST
         and b not in COLOURS and b not in STOPWORDS and not b.replace(" ", "").isdigit()
         and len(b.split()) <= MAX_BRAND_TOKENS
-    ]
-    return frozenset(keep)
+    )
+    in_titles, own_in_title = Counter(), Counter()  # titles mentioning b / of brand b mentioning b
+    for b, title in zip(brands, p["title"]):
+        seen = brands_in_text(title, candidates)
+        in_titles.update(seen)
+        if b in seen:
+            own_in_title[b] += 1
+    return frozenset(b for b in candidates
+                     if in_titles[b] and own_in_title[b] / in_titles[b] >= MIN_BRAND_DISTINCTIVENESS)
 
 
 def brands_in_text(text: str, vocab: frozenset[str]) -> set[str]:

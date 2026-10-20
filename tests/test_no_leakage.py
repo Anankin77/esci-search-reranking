@@ -102,7 +102,20 @@ def test_brand_vocab_built_from_training_products_only():
     train = df[df["query_id"] != 3]
     vocab = F.fit_brand_vocab(F.feature_input(train), min_products=1)
     assert "mugco" not in vocab  # brand that appears only in validation products
-    assert "acme" in vocab and "generic" not in vocab
+    assert "nike" in vocab and "generic" not in vocab
+
+
+def test_brand_vocab_drops_non_distinctive_names():
+    # brand "Without" appears in many titles of other brands -> not a usable brand cue
+    p = pd.DataFrame({
+        "product_id": [f"p{i}" for i in range(8)],
+        "brand": ["Without", "Without", "Acme", "Acme", "Acme", "Acme", "Bolt", "Bolt"],
+        "title": ["Without brand bag", "Without tote", "Shampoo without sulfate", "Soap without dye",
+                  "Lotion without scent", "Gel without alcohol",
+                  "Bolt drill without battery", "Bolt saw without blade"],
+    })
+    vocab = F.fit_brand_vocab(p)
+    assert "bolt" in vocab and "without" not in vocab
 
 
 def test_scaler_is_fit_on_training_rows_only():

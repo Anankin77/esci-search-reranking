@@ -79,7 +79,7 @@ Examples (training queries, random):
 
 - numeric: `1% hydrocortisone cream without aloe` · `logitech g933` · `samsung galaxy note 10 plus otter box` · `iron man mark 85` · `body pillow cover 21 x 54` · `boys 8 nightgown` · `1-cup pyrex without lid` · `otter box for iphone 10`
 - negation: `butterfly knife trainer without latch` · `outdoor ceiling fan without lights` · `do not open this book` · `50 inch tv not smart` · `06 titan trans oil cooler line not adapter` · `rolling pin without handles` · `desk chair without wheels cheap` · `1 in curling iron without clamp`
-- brand: `strathmore 300 watercolor` · `100” cutain rod without center support` · `brown queen flat sheet` · `snug headphones kids noise cancelling` · `light blue toddler suits` · `healing depression without medication` · `theworldofpatio` · `5.11 moab`
+- brand: `swiffer steam boost pad refills` · `angelcare baby monitor` · `cremo hair clay` · `sony xr65a80j` · `mattress dream solutions usa` · `jeep cherokee fenders` · `toysmith build a birdhouse` · `bacardi rum`
 - colour: `black wool dryer balls` · `gren and yelow and white balloons` · `royal blue top girl 2t` · `retinol eye cream with caffeine` · `white and pink crib sheets` · `womens sexy bodycon dress blue` · `flat tummy cream for women` · `pink sweaters with hearts`
 
 Query sources (from `sources.csv`; metadata only, not used as a feature): other 24,107, parse_pattern 2,558, negations 2,318, behavioral 762, nlqec 99.
