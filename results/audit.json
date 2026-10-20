@@ -1,0 +1,467 @@
+{
+  "sizes": [
+    {
+      "split": "train",
+      "queries": 20888,
+      "pairs": 419653,
+      "products": 351961,
+      "cand_min": 8,
+      "cand_median": 16.0,
+      "cand_max": 188
+    },
+    {
+      "split": "test",
+      "queries": 8956,
+      "pairs": 181701,
+      "products": 164900,
+      "cand_min": 8,
+      "cand_median": 16.0,
+      "cand_max": 95
+    },
+    {
+      "split": "total",
+      "queries": 29844,
+      "pairs": 601354,
+      "products": 482105,
+      "cand_min": 8,
+      "cand_median": 16.0,
+      "cand_max": 188
+    }
+  ],
+  "candidates_hist": {
+    "8": 91,
+    "9": 95,
+    "10": 111,
+    "11": 148,
+    "12": 175,
+    "13": 260,
+    "14": 425,
+    "15": 939,
+    "16": 21577,
+    "17": 118,
+    "18": 46,
+    "19": 49,
+    "20": 61,
+    "21": 63,
+    "22": 65,
+    "23": 79,
+    "24": 68,
+    "25": 78,
+    "26": 65,
+    "27": 76,
+    "28": 71,
+    "29": 48,
+    "30": 65,
+    "31": 60,
+    "32": 81,
+    "33": 39,
+    "34": 40,
+    "35": 36,
+    "36": 53,
+    "37": 51,
+    "38": 107,
+    "39": 410,
+    "40": 3521,
+    "41": 268,
+    "42": 94,
+    "43": 60,
+    "44": 36,
+    "45": 26,
+    "46": 15,
+    "47": 20,
+    "48": 20,
+    "49": 18,
+    "50": 14,
+    "51": 8,
+    "52": 8,
+    "53": 7,
+    "54": 5,
+    "55": 8,
+    "56": 6,
+    "57": 5,
+    "58": 5,
+    "59": 2,
+    "60": 7,
+    "62": 1,
+    "63": 4,
+    "64": 1,
+    "65": 1,
+    "66": 2,
+    "67": 4,
+    "68": 2,
+    "69": 2,
+    "70": 4,
+    "72": 2,
+    "74": 1,
+    "75": 1,
+    "76": 1,
+    "79": 3,
+    "83": 1,
+    "84": 2,
+    "85": 2,
+    "87": 1,
+    "94": 1,
+    "95": 1,
+    "98": 1,
+    "109": 1,
+    "136": 1,
+    "188": 1
+  },
+  "label_mix": {
+    "test": {
+      "E": 0.4387,
+      "S": 0.3498,
+      "C": 0.0446,
+      "I": 0.1669
+    },
+    "train": {
+      "E": 0.4333,
+      "S": 0.3518,
+      "C": 0.0455,
+      "I": 0.1695
+    },
+    "total": {
+      "E": 0.4349,
+      "S": 0.3512,
+      "C": 0.0452,
+      "I": 0.1687
+    }
+  },
+  "queries_without_relevant": 0,
+  "share_exact_per_query": {
+    "train": {
+      "mean": 0.43003758545844606,
+      "median": 0.4,
+      "share_all_exact": 0.0,
+      "share_no_exact": 0.0,
+      "n_all_exact": 0,
+      "n_no_exact": 0
+    },
+    "test": {
+      "mean": 0.4342004224995087,
+      "median": 0.42857142857142855,
+      "share_all_exact": 0.0,
+      "share_no_exact": 0.00011165698972755694,
+      "n_all_exact": 0,
+      "n_no_exact": 1
+    }
+  },
+  "missing": {
+    "train": {
+      "title": 0.0,
+      "description": 0.499,
+      "bullets": 0.1158,
+      "brand": 0.0487,
+      "colour": 0.3078
+    },
+    "test": {
+      "title": 0.0,
+      "description": 0.5003,
+      "bullets": 0.1185,
+      "brand": 0.0507,
+      "colour": 0.3069
+    }
+  },
+  "top_brands": [
+    {
+      "brand": "Nike",
+      "products": 2818,
+      "pairs": 3317,
+      "share_pairs_brand_in_query": 0.6068736810370817
+    },
+    {
+      "brand": "adidas",
+      "products": 1841,
+      "pairs": 2191,
+      "share_pairs_brand_in_query": 0.3491556366955728
+    },
+    {
+      "brand": "Amazon Essentials",
+      "products": 1556,
+      "pairs": 1763,
+      "share_pairs_brand_in_query": 0.018150879183210438
+    },
+    {
+      "brand": "Hanes",
+      "products": 1352,
+      "pairs": 1811,
+      "share_pairs_brand_in_query": 0.08779679734953065
+    },
+    {
+      "brand": "Under Armour",
+      "products": 1309,
+      "pairs": 1510,
+      "share_pairs_brand_in_query": 0.376158940397351
+    },
+    {
+      "brand": "Disney",
+      "products": 1270,
+      "pairs": 1502,
+      "share_pairs_brand_in_query": 0.1085219707057257
+    },
+    {
+      "brand": "Amazon Basics",
+      "products": 1054,
+      "pairs": 1759,
+      "share_pairs_brand_in_query": 0.007390562819783968
+    },
+    {
+      "brand": "Rubie's",
+      "products": 916,
+      "pairs": 1116,
+      "share_pairs_brand_in_query": 0.0
+    },
+    {
+      "brand": "Skechers",
+      "products": 817,
+      "pairs": 960,
+      "share_pairs_brand_in_query": 0.17395833333333333
+    },
+    {
+      "brand": "Champion",
+      "products": 791,
+      "pairs": 941,
+      "share_pairs_brand_in_query": 0.3645058448459086
+    },
+    {
+      "brand": "Apple",
+      "products": 749,
+      "pairs": 1900,
+      "share_pairs_brand_in_query": 0.25105263157894736
+    },
+    {
+      "brand": "LEGO",
+      "products": 734,
+      "pairs": 1259,
+      "share_pairs_brand_in_query": 0.5647339158061954
+    },
+    {
+      "brand": "Carhartt",
+      "products": 731,
+      "pairs": 915,
+      "share_pairs_brand_in_query": 0.35628415300546445
+    },
+    {
+      "brand": "Columbia",
+      "products": 709,
+      "pairs": 852,
+      "share_pairs_brand_in_query": 0.31103286384976525
+    },
+    {
+      "brand": "Samsung Electronics",
+      "products": 699,
+      "pairs": 1375,
+      "share_pairs_brand_in_query": 0.584
+    },
+    {
+      "brand": "Simple Joys by Carter's",
+      "products": 656,
+      "pairs": 915,
+      "share_pairs_brand_in_query": 0.0
+    },
+    {
+      "brand": "Levi's",
+      "products": 648,
+      "pairs": 766,
+      "share_pairs_brand_in_query": 0.2245430809399478
+    },
+    {
+      "brand": "Crocs",
+      "products": 641,
+      "pairs": 779,
+      "share_pairs_brand_in_query": 0.4197689345314506
+    },
+    {
+      "brand": "Unknown",
+      "products": 632,
+      "pairs": 692,
+      "share_pairs_brand_in_query": 0.0
+    },
+    {
+      "brand": "Calvin Klein",
+      "products": 629,
+      "pairs": 691,
+      "share_pairs_brand_in_query": 0.19247467438494936
+    }
+  ],
+  "share_pairs_brand_in_query": 0.09944059572231996,
+  "query_length": {
+    "mean": 3.9166331590939554,
+    "median": 4.0,
+    "max": 29,
+    "hist": {
+      "0": 5,
+      "1": 882,
+      "2": 4854,
+      "3": 7889,
+      "4": 7330,
+      "5": 4540,
+      "6": 2326,
+      "7": 1081,
+      "8": 479,
+      "9": 221,
+      "10": 97,
+      "11": 45,
+      "12": 17,
+      "13": 9,
+      "14": 5,
+      "16": 5,
+      "17": 7,
+      "18": 3,
+      "19": 5,
+      "20": 4,
+      "21": 2,
+      "22": 4,
+      "23": 9,
+      "24": 6,
+      "25": 7,
+      "26": 4,
+      "27": 4,
+      "28": 1,
+      "29": 3
+    }
+  },
+  "query_examples": {
+    "numeric": [
+      "1% hydrocortisone cream without aloe",
+      "logitech g933",
+      "samsung galaxy note 10 plus otter box",
+      "iron man mark 85",
+      "body pillow cover 21 x 54",
+      "boys 8 nightgown",
+      "1-cup pyrex without lid",
+      "otter box for iphone 10"
+    ],
+    "negation": [
+      "butterfly knife trainer without latch",
+      "outdoor ceiling fan without lights",
+      "do not open this book",
+      "50 inch tv not smart",
+      "06 titan trans oil cooler line not adapter",
+      "rolling pin without handles",
+      "desk chair without wheels cheap",
+      "1 in curling iron without clamp"
+    ],
+    "brand": [
+      "strathmore 300 watercolor",
+      "100\u201d cutain rod without center support",
+      "brown queen flat sheet",
+      "snug headphones kids noise cancelling",
+      "light blue toddler suits",
+      "healing depression without medication",
+      "theworldofpatio",
+      "5.11 moab"
+    ],
+    "colour": [
+      "black wool dryer balls",
+      "gren and yelow and white balloons",
+      "royal blue top girl 2t",
+      "retinol eye cream with caffeine",
+      "white and pink crib sheets",
+      "womens sexy bodycon dress blue",
+      "flat tummy cream for women",
+      "pink sweaters with hearts"
+    ]
+  },
+  "query_type_shares": {
+    "numeric": 0.2086181477013805,
+    "negation": 0.08648304516820801
+  },
+  "query_sources": {
+    "other": 24107,
+    "parse_pattern": 2558,
+    "negations": 2318,
+    "behavioral": 762,
+    "nlqec": 99
+  },
+  "join_coverage": 1.0,
+  "duplicate_pairs": 0,
+  "product_overlap": {
+    "share_test_pairs_product_in_train": 0.2562341429051023,
+    "share_test_products_in_train": 0.21077016373559734
+  },
+  "near_dup": {
+    "test_queries": 8956,
+    "exact_dup": 26,
+    "cosine_ge_090": 100,
+    "flagged": 101,
+    "share_flagged": 0.011277355962483252
+  },
+  "sanity_examples": [
+    {
+      "query": "ducky one two mini white",
+      "labels": {
+        "S": 10,
+        "E": 5,
+        "I": 1
+      }
+    },
+    {
+      "query": "industrial fan 12",
+      "labels": {
+        "E": 22,
+        "S": 14,
+        "I": 4
+      }
+    },
+    {
+      "query": "trolling motor mount",
+      "labels": {
+        "E": 9,
+        "C": 5,
+        "S": 2
+      }
+    },
+    {
+      "query": "8x11 rugs for living room",
+      "labels": {
+        "S": 11,
+        "E": 5
+      }
+    },
+    {
+      "query": "fleece",
+      "labels": {
+        "E": 15,
+        "I": 1
+      }
+    },
+    {
+      "query": "gold necklace for girlfriend",
+      "labels": {
+        "S": 9,
+        "C": 3,
+        "E": 3
+      }
+    },
+    {
+      "query": "vacation tops for women beach",
+      "labels": {
+        "E": 11,
+        "I": 5
+      }
+    },
+    {
+      "query": "women samsung smart watch",
+      "labels": {
+        "E": 12,
+        "S": 4
+      }
+    },
+    {
+      "query": "red athletic shorts women",
+      "labels": {
+        "E": 13,
+        "S": 3
+      }
+    },
+    {
+      "query": "flush mount ceiling fans without lights",
+      "labels": {
+        "E": 23,
+        "S": 12,
+        "I": 6
+      }
+    }
+  ]
+}

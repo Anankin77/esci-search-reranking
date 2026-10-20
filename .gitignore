@@ -1,0 +1,19 @@
+# data (never committed)
+data/
+*.npy
+*.parquet
+# secrets
+.env
+*.env
+# models / binaries
+*.txt.model
+*.lgb
+*.pkl
+*.joblib
+models/
+# python / tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/

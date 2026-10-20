@@ -1,0 +1,49 @@
+{
+  "n_examples_small_us": 601354,
+  "duplicate_pairs_dropped": 0,
+  "products_in_locale": 482105,
+  "join_coverage": 1.0,
+  "pairs_without_product": 0,
+  "sizes": {
+    "total": {
+      "got": {
+        "queries": 29844,
+        "pairs": 601354
+      },
+      "expected": {
+        "queries": 29844,
+        "pairs": 601354
+      },
+      "within_1pct": true
+    },
+    "train": {
+      "got": {
+        "queries": 20888,
+        "pairs": 419653
+      },
+      "expected": {
+        "queries": 20888,
+        "pairs": 419653
+      },
+      "within_1pct": true
+    },
+    "test": {
+      "got": {
+        "queries": 8956,
+        "pairs": 181701
+      },
+      "expected": {
+        "queries": 8956,
+        "pairs": 181701
+      },
+      "within_1pct": true
+    }
+  },
+  "fold_sizes_queries": [
+    4178,
+    4178,
+    4178,
+    4177,
+    4177
+  ]
+}
