@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -66,7 +67,7 @@ LGBM_GRID = [
 LGBM_LEARNING_RATE = 0.05
 LGBM_MAX_ROUNDS = 2000
 LGBM_EARLY_STOPPING = 50
-LGBM_THREADS = 4
+LGBM_THREADS = int(os.environ.get("LGBM_THREADS", 4))  # override when sharing the CPU
 TIE_MARGIN = 0.002  # model-selection rule (spec §3)
 MODEL_SIMPLICITY = ["logreg", "lgbm_pointwise", "lgbm_lambdarank"]
 

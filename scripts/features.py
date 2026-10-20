@@ -173,7 +173,10 @@ class BM25Stats:
 
 
 def fit_bm25(corpus: list[str]) -> BM25Stats:
-    bm = BM25Okapi([tokenize(d) for d in corpus], k1=BM25_K1, b=BM25_B)
+    tokens = [tokenize(d) for d in corpus]
+    if not any(tokens):  # field empty everywhere: every score is 0
+        return BM25Stats(idf={}, avgdl=1.0)
+    bm = BM25Okapi(tokens, k1=BM25_K1, b=BM25_B)
     return BM25Stats(idf=dict(bm.idf), avgdl=float(bm.avgdl))
 
 
@@ -383,6 +386,41 @@ def build_matrix(pairs: pd.DataFrame, static: pd.DataFrame, state: FittedState,
     return X.astype(float)
 
 
+# ---------------------------------------------------------------- data loading
+def load_train(paths: RunPaths) -> pd.DataFrame:
+    """Training pairs (sorted by query_id, product_id) with their CV fold number."""
+    pairs = pd.read_parquet(paths.processed / "pairs.parquet")
+    train = pairs[pairs["split"] == "train"].sort_values(["query_id", "product_id"])
+    folds = pd.read_parquet(paths.processed / "folds.parquet")
+    train = train.merge(folds, on="query_id", how="left", validate="m:1")
+    assert train["fold"].notna().all()
+    return train.reset_index(drop=True)
+
+
+def fold_matrix(paths: RunPaths, train: pd.DataFrame, k: int | None) -> pd.DataFrame:
+    """Feature matrix for ALL training rows, with fitted features learned on the
+    training part of fold k only (rows whose fold != k). k=None fits on every
+    training row (final model). Cached in data/processed/features_fold<k>.parquet."""
+    name = "full" if k is None else str(k)
+    f = paths.processed / f"features_fold{name}.parquet"
+    features = available_features(paths)
+    if f.exists():
+        X = pd.read_parquet(f)
+        assert (X["query_id"].to_numpy() == train["query_id"].to_numpy()).all()
+        assert (X["product_id"].to_numpy() == train["product_id"].to_numpy()).all()
+        return X[features]
+    t0 = time.time()
+    static = load_or_build_static(paths, train, "train")
+    fit_rows = train if k is None else train[train["fold"] != k]
+    state = fit_state(feature_input(fit_rows))
+    X = build_matrix(train, static, state, features)
+    X.insert(0, "product_id", train["product_id"].to_numpy())
+    X.insert(0, "query_id", train["query_id"].to_numpy())
+    X.to_parquet(f, index=False)
+    print(f"fold {name}: features built in {time.time() - t0:.0f}s")
+    return X[features]
+
+
 # ---------------------------------------------------------------- FEATURES.md
 def write_features_md(path) -> None:
     lines = [
@@ -411,10 +449,11 @@ def main() -> None:
     paths = get_paths(args.sample)
     t0 = time.time()
     write_features_md(ROOT / "FEATURES.md")
-    pairs = pd.read_parquet(paths.processed / "pairs.parquet")
-    train = pairs[pairs["split"] == "train"]
+    train = load_train(paths)
     static = load_or_build_static(paths, train, "train")
     print(static.describe().T.to_string())
+    for k in sorted(train["fold"].unique()):  # fitted features, one matrix per CV fold
+        fold_matrix(paths, train, int(k))
     log_runtime(paths, "features_static_train", time.time() - t0)
 
 

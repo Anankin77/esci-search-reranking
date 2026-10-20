@@ -1,0 +1,20 @@
+# Python 3.13. Pinned versions used for the reported results.
+numpy==2.5.4
+pandas==3.0.6
+pyarrow==26.0.0
+scipy==1.18.1
+scikit-learn==1.9.1
+lightgbm==4.7.0
+rank-bm25==0.2.2
+matplotlib==3.11.2
+requests==2.34.2
+# encoder (CPU is enough; on Linux `pip install torch --index-url https://download.pytorch.org/whl/cpu` is smaller)
+torch==2.14.1
+transformers==5.20.2
+sentence-transformers==6.1.0
+# tests, notebook, site screenshots
+pytest==9.1.1
+nbformat==5.11.1
+nbclient==0.11.0
+ipykernel==7.4.0
+playwright==1.64.0

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When Keyword Matching Fails</title>
+<meta name="description" content="Learning to re-rank Amazon product search results on hard queries (ESCI). ES 335 final project.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f5fa7'/%3E%3Cpath d='M8 22h4V12H8zm6 0h4V8h-4zm6 0h4v-7h-4z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <button id="menu-btn" class="icon-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+  <span class="topbar-title">When keyword matching fails</span>
+  <button class="icon-btn theme-btn" aria-label="Toggle dark mode">◐</button>
+</header>
+<div id="scrim" class="scrim" hidden></div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="brand">
+    <div class="brand-title">When keyword matching fails</div>
+    <div class="brand-sub">Re-ranking Amazon search results on hard queries</div>
+  </div>
+  <nav id="nav" aria-label="Sections"></nav>
+  <div class="sidebar-foot">
+    <button class="theme-btn link-btn" aria-label="Toggle dark mode">◐ Theme</button>
+    <div class="muted small">ES 335 · Vishaw Raj Meena (24110388)</div>
+  </div>
+</aside>
+
+<main id="main">
+<div id="load-error" class="callout warn" hidden>Could not load <code>data/site.json</code>. Serve the folder over HTTP (e.g. <code>python -m http.server -d site</code>).</div>
+
+<!-- 1 ─────────────────────────────────────────── -->
+<section id="question" class="page" data-title="Question">
+  <h1>When does keyword matching fail?</h1>
+  <p class="lead">For difficult English shopping queries, does a learning-to-rank model built on interpretable
+    query–product features order candidate products better than the BM25 keyword ranker? And which kinds of
+    queries does each method get wrong?</p>
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">Random order</div><div class="kpi-value" data-v="test.all.table.random.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
+    <div class="kpi"><div class="kpi-label">BM25 on title</div><div class="kpi-value" data-v="test.all.table.bm25_title.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
+    <div class="kpi accent"><div class="kpi-label"><span data-model-name></span></div><div class="kpi-value" data-v="test.all.table.model.ndcg.mean"></div><div class="kpi-sub">test nDCG</div></div>
+    <div class="kpi"><div class="kpi-label">Model − BM25</div><div class="kpi-value" data-v="test.all.diff.model - bm25_title.ndcg.mean" data-sign></div><div class="kpi-sub">95% CI <span data-ci-range="test.all.diff.model - bm25_title.ndcg"></span></div></div>
+  </div>
+  <h2>Setup in one paragraph</h2>
+  <p>Each query comes with about <span data-v="audit.sizes.2.cand_median" data-f="0"></span> candidate products that
+    Amazon already retrieved, each labelled by a person as <span class="chip E">E</span> Exact,
+    <span class="chip S">S</span> Substitute, <span class="chip C">C</span> Complement or <span class="chip I">I</span> Irrelevant.
+    A method gives every (query, product) pair a score; we sort the candidates by score and measure how well
+    the order puts Exact products first (nDCG). The model only sees the query text and the catalog fields —
+    never the labels.</p>
+  <ul>
+    <li><b>Unit of prediction:</b> one (query, product) pair gets a relevance score.</li>
+    <li><b>Unit of evaluation:</b> one query — the ranked list of its candidates.</li>
+    <li><b>Limits:</b> we re-rank candidates Amazon already retrieved. We say nothing about Amazon's live search,
+      the retrieval stage, or why people buy.</li>
+  </ul>
+</section>
+
+<!-- 2 ─────────────────────────────────────────── -->
+<section id="data" class="page" data-title="Data">
+  <h1>Data</h1>
+  <p><b>Amazon Shopping Queries Dataset (ESCI)</b> — Reddy et al., 2022, <i>“Shopping Queries Dataset: A Large-Scale
+    ESCI Benchmark for Improving Product Search”</i>, <a href="https://arxiv.org/abs/2206.06588">arXiv:2206.06588</a>.
+    Licence: <b>Apache-2.0</b>. Source: <a href="https://github.com/amazon-science/esci-data">github.com/amazon-science/esci-data</a>.
+    We use the <i>small</i> version (hard queries), US locale. This site shows only the sampled product titles
+    and brands needed for the inspector.</p>
+  <div class="table-wrap"><table id="t-sizes"></table></div>
+  <h2>Labels</h2>
+  <p>Share of pairs per label. Most candidates are relevant, which is why even a random order scores high.</p>
+  <div class="chart-box short"><canvas id="c-labels"></canvas></div>
+  <h2>Missing fields (empty after cleaning)</h2>
+  <div class="table-wrap"><table id="t-missing"></table></div>
+  <h2>Integrity checks across splits</h2>
+  <ul>
+    <li><b>Shared products:</b> <span data-v="audit.product_overlap.share_test_pairs_product_in_train" data-pct></span>
+      of test pairs have a product that also appears in training. Allowed (shared catalog); no feature uses labels,
+      so no label can leak through them.</li>
+    <li><b>Near-duplicate queries:</b> <span data-v="audit.near_dup.flagged" data-f="0"></span> test queries
+      (<span data-v="audit.near_dup.share_flagged" data-pct></span>) equal a training query after normalisation or have
+      character-3-gram TF-IDF cosine ≥ 0.90 with one. Results are shown with and without them.</li>
+    <li><b>Join coverage</b> examples → products: <span data-v="audit.join_coverage" data-pct></span>;
+      duplicate (query, product) pairs: <span data-v="audit.duplicate_pairs" data-f="0"></span>.</li>
+  </ul>
+  <h2>Queries</h2>
+  <p>Mean length <span data-v="audit.query_length.mean" data-f="2"></span> tokens.
+    <span data-v="audit.query_type_shares.numeric" data-pct></span> contain a digit and
+    <span data-v="audit.query_type_shares.negation" data-pct></span> a negation cue
+    (<i>without, no, not, non, free</i>). The product's brand appears in the query for
+    <span data-v="audit.share_pairs_brand_in_query" data-pct></span> of pairs.</p>
+</section>
+
+<!-- 3 ─────────────────────────────────────────── -->
+<section id="preprocessing" class="page" data-title="Preprocessing">
+  <h1>Preprocessing and features</h1>
+  <h2>Text cleaning</h2>
+  <ol>
+    <li>Strip HTML tags and entities; Unicode NFKC; collapse whitespace.</li>
+    <li>Lowercase only inside feature code; original text kept for display.</li>
+    <li>Truncate description and bullet points to <span data-v="config.text_char_budget" data-f="0"></span> characters (speed).</li>
+    <li>Tokens: lowercase alphanumeric runs, decimals kept, in-word apostrophes dropped (<i>levi's → levis</i>).</li>
+  </ol>
+  <h2>Learned preprocessing stays inside the training fold</h2>
+  <p>BM25 statistics (IDF, average length), the brand vocabulary and the logistic-regression scaler are fit on the
+    training part of each fold only — and on the full training split for the final model. The test split was opened
+    once, after the model was frozen.</p>
+  <h2>Features (<span data-v="features.length" data-f="0"></span>)</h2>
+  <p class="muted">Every feature is a function of the query and catalog text. None uses relevance labels.</p>
+  <div class="table-wrap"><table id="t-features"></table></div>
+</section>
+
+<!-- 4 ─────────────────────────────────────────── -->
+<section id="methods" class="page" data-title="Baselines &amp; Methods">
+  <h1>Baselines and methods</h1>
+  <h2>Baselines (no learning)</h2>
+  <ol>
+    <li><b>Random order</b>, averaged over 20 seeds — the floor.</li>
+    <li><b>BM25 on title</b> — the main baseline (rank_bm25 BM25Okapi, k1 = <span data-v="config.bm25_k1" data-f="2"></span>,
+      b = <span data-v="config.bm25_b" data-f="2"></span>, IDF from training titles).</li>
+    <li><b>BM25 on all fields</b> (title + brand + colour + bullets) — a stronger lexical baseline.</li>
+    <li><b>Encoder cosine</b>: zero-shot cosine between query and title embeddings from
+      <code data-text="config.encoder"></code> (released 2021, before ESCI).</li>
+  </ol>
+  <h2>Learned models</h2>
+  <ol>
+    <li><b>Logistic regression</b> (pointwise): predicts “Exact vs not”; standardised features; C and class weight tuned.</li>
+    <li><b>LightGBM pointwise regression</b> on the gain value (E/S/C/I → 1 / 0.1 / 0.01 / 0).</li>
+    <li><b>LightGBM LambdaRank</b>: optimises nDCG directly with the official gains as <code>label_gain</code>;
+      early stopping on an inner split of the fold's training part.</li>
+  </ol>
+  <h2>Validation design</h2>
+  <p>5-fold <code>GroupKFold</code> on the <span data-v="cv.n_train_queries" data-f="0"></span> training queries, grouped by
+    query so all candidates of a query stay together. Selection rule fixed in advance: highest mean CV nDCG; within
+    0.002, the simpler model wins (logistic regression &lt; LightGBM pointwise &lt; LambdaRank).</p>
+  <div class="callout"><b>Chosen model:</b> <span data-model-name></span> <code data-json="cv.chosen.config"></code>.
+    <span data-text="cv.chosen.reason"></span></div>
+</section>
+
+<!-- 5 ─────────────────────────────────────────── -->
+<section id="evaluation" class="page" data-title="Evaluation">
+  <h1>Evaluation</h1>
+  <h2>Metrics</h2>
+  <ul>
+    <li><b>nDCG (full list, primary)</b> — official ESCI metric; gains E = 1, S = 0.1, C = 0.01, I = 0; discount log2(rank + 1).</li>
+    <li><b>nDCG@5</b> — what a shopper sees first.</li>
+    <li><b>Exact-P@1</b> — is the first result exactly what was asked for?</li>
+  </ul>
+  <p>Ties in scores are broken with a seeded random key, never row order.</p>
+  <h2>Cross-validation results (training split)</h2>
+  <p class="muted">Mean ± std across 5 folds.</p>
+  <div class="table-wrap"><table id="t-cv"></table></div>
+  <h2>Ablation: does each feature group pay?</h2>
+  <p class="muted">LambdaRank, same folds; error bars = 95% bootstrap CI over training queries (out-of-fold).</p>
+  <div class="chart-box"><canvas id="c-ablation"></canvas></div>
+  <h2>What the model relies on</h2>
+  <p class="muted">LambdaRank, mean |SHAP| (LightGBM <code>pred_contrib</code>) on validation folds, top 15.</p>
+  <div class="chart-box tall"><canvas id="c-importance"></canvas></div>
+</section>
+
+<!-- 6 ─────────────────────────────────────────── -->
+<section id="results" class="page" data-title="Results">
+  <h1>Test results</h1>
+  <p>Official test split, <span data-v="test.n_test_queries" data-f="0"></span> queries, scored once.
+    Brackets: 95% bootstrap CIs (1,000 resamples of queries, the same resamples for every method, so differences are paired).</p>
+  <div class="seg" role="tablist" id="nd-toggle">
+    <button class="seg-btn active" data-set="all">All test queries</button>
+    <button class="seg-btn" data-set="without_near_dup">Without near-duplicates</button>
+  </div>
+  <div class="table-wrap"><table id="t-test"></table></div>
+  <div class="table-wrap"><table id="t-diff"></table></div>
+  <h2>Per query: model vs BM25-title</h2>
+  <p>Win / tie / loss: <b data-v="test.win_tie_loss.win" data-f="0"></b> /
+    <b data-v="test.win_tie_loss.tie" data-f="0"></b> / <b data-v="test.win_tie_loss.loss" data-f="0"></b>.
+    <span class="muted">Click a bar to open those queries in the inspector.</span></p>
+  <div class="chart-box"><canvas id="c-delta"></canvas></div>
+</section>
+
+<!-- 7 ─────────────────────────────────────────── -->
+<section id="inspector" class="page wide" data-title="Query Inspector">
+  <h1>Query inspector</h1>
+  <p class="muted">A stratified sample of <span data-v="inspector_meta.n_queries" data-f="0"></span> test queries.
+    Lines connect the same product in both rankings. Click a product to see why the model placed it there.</p>
+  <div class="insp-controls">
+    <div class="search">
+      <input id="q-search" type="search" placeholder="Search test queries…" autocomplete="off" aria-label="Search test queries">
+      <ul id="q-suggest" class="suggest" hidden></ul>
+    </div>
+    <div id="chips" class="chips"></div>
+    <div id="active-filter" class="muted small"></div>
+  </div>
+  <div class="insp-layout">
+    <div class="qlist-box">
+      <div class="small muted" id="qlist-count"></div>
+      <ul id="qlist" class="qlist"></ul>
+    </div>
+    <div class="insp-main">
+      <div id="q-head" class="q-head"></div>
+      <div id="rankings" class="rankings">
+        <div class="rank-col"><h3>BM25 title</h3><ol id="col-bm25"></ol></div>
+        <svg id="links" class="links" aria-hidden="true"></svg>
+        <div class="rank-col"><h3 data-model-name></h3><ol id="col-model"></ol></div>
+      </div>
+      <div id="contrib" class="contrib" hidden></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ─────────────────────────────────────────── -->
+<section id="errors" class="page" data-title="Errors">
+  <h1>Where each method fails</h1>
+  <p>ΔnDCG of the chosen model vs BM25-title per query category, with 95% CIs. Categories are rule-based taggers on the
+    query text; <i>substitute_heavy</i> uses labels and is analysis-only. <span class="muted">Click a bar to filter the inspector.</span></p>
+  <div class="chart-box"><canvas id="c-cats"></canvas></div>
+  <div class="table-wrap"><table id="t-cats"></table></div>
+  <h2>Where the model helps most</h2>
+  <div id="ex-helps" class="examples"></div>
+  <h2>Where the model hurts most</h2>
+  <div id="ex-hurts" class="examples"></div>
+</section>
+
+<!-- 9 ─────────────────────────────────────────── -->
+<section id="limitations" class="page" data-title="Limitations">
+  <h1>Limitations</h1>
+  <ul>
+    <li><b>Re-ranking only.</b> The candidates were pre-retrieved by Amazon, so retrieval errors are invisible.</li>
+    <li><b>Noisy labels.</b> Labels are human judgments with noise and ambiguity, especially Substitute vs Exact.</li>
+    <li><b>Hard subset.</b> The small version was chosen to be difficult, so results do not transfer to typical traffic.</li>
+    <li><b>English / US only.</b></li>
+    <li><b>Shared products</b> across splits (<span data-v="audit.product_overlap.share_test_pairs_product_in_train" data-pct></span> of test pairs)
+      and <b>near-duplicate queries</b> (<span data-v="test.n_near_dup" data-f="0"></span> test queries; results shown both ways).</li>
+    <li><b>Encoder.</b> <code data-text="config.encoder"></code> was released before ESCI (June 2022), so it cannot have been
+      trained on it, but its general web training may still include Amazon-like text. No model fine-tuned on ESCI or
+      e-commerce search was used, and no LLM judged relevance.</li>
+    <li><b>Explanations ≠ intent.</b> Feature contributions explain the model, not the shopper. Prediction is not causation.</li>
+  </ul>
+</section>
+
+<!-- 10 ────────────────────────────────────────── -->
+<section id="conclusion" class="page" data-title="Conclusion">
+  <h1>Conclusion</h1>
+  <div id="conclusion-body"></div>
+</section>
+
+<!-- 11 ────────────────────────────────────────── -->
+<section id="reproduce" class="page" data-title="Reproduce">
+  <h1>Reproduce</h1>
+  <pre><code>git clone &lt;this repo&gt; &amp;&amp; cd esci-search-reranking
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+
+python run_all.py --sample 500      # smoke test (minutes)
+python run_all.py                   # full run; stops before the test split
+git add results/report_2_validation.md &amp;&amp; git commit -m "Freeze model"
+python run_all.py --from test       # one-time test run, extras, site data
+pytest                              # metrics, parsing and leakage tests
+python -m http.server -d site       # open http://localhost:8000</code></pre>
+  <p>Runtime of each phase of the full run (seconds, 4 CPU cores):</p>
+  <div class="table-wrap"><table id="t-runtime"></table></div>
+  <p class="muted small">Site data generated <span data-text="generated"></span>. Every number on this site is read from
+    <code>site/data/site.json</code>, exported from <code>results/*.json</code> by <code>scripts/export_site_data.py</code>.</p>
+</section>
+
+<nav class="pager" id="pager" aria-label="Previous and next section"></nav>
+</main>
+</body>
+</html>
