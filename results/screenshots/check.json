@@ -1,0 +1,16 @@
+{
+  "console_errors": [],
+  "interaction_checks": {
+    "autocomplete_suggestions": 1,
+    "links_drawn": 15,
+    "contribution_bars": 5,
+    "category_filter_count": "485 queries",
+    "category_click_opens": "#inspector",
+    "delta_click_opens": [
+      "#inspector",
+      "\u0394 bin +0.00 \u2026 +0.05 clear \u00d7"
+    ],
+    "ablation_chart": true,
+    "mobile_menu_navigates": "#inspector"
+  }
+}

@@ -188,19 +188,25 @@ function renderConclusion() {
   const wtl = S.test.win_tie_loss;
   const extra = $("#conclusion-extra") ? $("#conclusion-extra").innerHTML : "";
   $("#conclusion-body").innerHTML = `
-    <p class="lead">On the official test split, the ${esc(modelName())} reaches nDCG <b>${f4(mod)}</b>, ${sig}
+    <p class="lead">On the official test split, the ${esc(modelName())} model reaches nDCG <b>${f4(mod)}</b>, ${sig}
       BM25 on titles (<b>${f4(bm)}</b>): a paired difference of <b>${ciSigned(d)}</b>.</p>
     <ul>
       <li><b>Size of the gain.</b> Random ordering already scores ${f4(rnd)}; BM25 adds ${signed(gap)} on top of random,
         and the model adds ${signed(mod - bm)} on top of BM25 (${Math.round(100 * (mod - bm) / gap)}% of the random → BM25 gap).
         The model wins on ${wtl.win.toLocaleString()} queries, ties on ${wtl.tie.toLocaleString()} and loses on ${wtl.loss.toLocaleString()}.</li>
       ${enc ? `<li><b>Against meaning-based matching.</b> The zero-shot encoder alone scores ${f4(enc.ndcg.mean)};
-        the model − encoder difference is ${ciSigned(dEnc.ndcg)}. Much of what the model adds over BM25 is semantic similarity,
-        combined with attribute and within-list signals.</li>` : ""}
-      <li><b>Feature groups.</b> In cross-validation, LambdaRank with lexical features only scores ${f4(abl[0].summary.ndcg.mean)};
-        with all ${abl[abl.length - 1].n_features} features ${f4(abl[abl.length - 1].summary.ndcg.mean)}.</li>
+        the model − encoder difference is ${ciSigned(dEnc.ndcg)}, so semantic similarity alone does not explain the gain.</li>` : ""}
+      <li><b>Feature groups (CV ablation, LambdaRank).</b> ${abl.map((a) => `${esc(a.name)}: ${f4(a.summary.ndcg.mean)}`).join(" → ")}
+        (BM25 title: ${f4(S.cv.baselines.bm25_title.ndcg.mean)}). Lexical features alone give
+        ${Math.round(100 * (abl[0].summary.ndcg.mean - S.cv.baselines.bm25_title.ndcg.mean) / (abl[abl.length - 1].summary.ndcg.mean - S.cv.baselines.bm25_title.ndcg.mean))}%
+        of the full model's CV gain over BM25 title.</li>
+      <li><b>Learning algorithm.</b> On test, logistic regression, LightGBM pointwise and LambdaRank score
+        ${f4(t.table.logreg.ndcg.mean)}, ${f4(t.table.lgbm_pointwise.ndcg.mean)} and ${f4(t.table.lgbm_lambdarank.ndcg.mean)}:
+        most of the value is in the features, not in ranking-aware training.</li>
       <li><b>Where it helps and fails.</b> The largest gain is on <i>${best[0]}</i> queries (Δ ${ciSigned(best[1].delta_vs_bm25_title)});
         the smallest on <i>${worst[0]}</i> queries (Δ ${ciSigned(worst[1].delta_vs_bm25_title)}).
+        Its typical failure is semantic similarity pulling a related but wrong product (an accessory, a similar book)
+        above an exact keyword match; BM25's typical failure is misspellings, negations and numbers.
         See the Errors section for the full table and per-query examples.</li>
       <li><b>Robustness.</b> Removing the ${S.test.n_near_dup} near-duplicate test queries changes the model − BM25 difference to
         ${ciSigned(S.test.without_near_dup.diff["model - bm25_title"].ndcg)}.</li>

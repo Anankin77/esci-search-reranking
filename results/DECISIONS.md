@@ -78,3 +78,14 @@ One numbered line per judgment call, with a one-line reason. Appended in build o
 65. The one-line diagnoses for the 15 best / 15 worst queries are generated mechanically (labels of each method's #1 plus the two largest contribution differences between them) — reproducible and not cherry-picked; the written interpretation is in `results/report_3_interpretation.md`.
 66. Two post-hoc checks (gain by candidate-list length; queries whose full text appears in a title) were run on the frozen predictions after seeing the results and are labelled post-hoc and descriptive in Report 3 — they did not change anything.
 67. `results/test_predictions.parquet` is written as the spec requires but not committed (`*.parquet` is git-ignored) — it contains ESCI labels, and data files stay out of git.
+
+## Phase 7–8: extra analyses and website
+68. Learning curve subsamples labelled training queries per fold (seeded) but keeps fold-level fitted features (BM25 statistics, brand vocabulary) — the question is how many *labelled* queries the model needs.
+69. Gain-sensitivity variants (lenient E=1, S=0.5, C=0.25; exact-only) are computed on the frozen test predictions and labelled post-hoc — spec Phase 7.
+70. Inspector sample: 1,800 test queries = the 30 helps/hurts examples + up to 150 per category + up to 25 per ΔnDCG histogram bin + up to 25 per outcome (helps/hurts/tie), filled at random (seed 42) — spec asks for ≥ 1,500 queries covering every category and win/loss level; total site data 6.2 MB (< 10 MB).
+71. Inspector product titles truncated to 90 characters, brands to 30; contributions stored as the top 5 by |value| — keeps the JSON small; only fields needed for the inspector are published.
+72. Inspector contributions come from the chosen LightGBM pointwise model (`pred_contrib`, SHAP units of the predicted gain) — the inspector explains the model that was actually frozen.
+73. Category explorer and Δ histogram filter the inspector sample (not all test queries) — only sampled queries can be opened in the browser.
+74. Conclusion text on the site is assembled in JavaScript from `site.json`, with only qualitative statements hand-written — rule "no hand-typed numbers".
+75. Site tested with the pre-installed headless Chromium at 390 × 844 and 1280 × 900, light and dark; the check fails on console errors or horizontal overflow (a long brand name overflowed at 390 px and was fixed) — spec §7.
+76. Chart.js 4.4.1 from cdnjs is the only external dependency; CI whiskers are drawn by a 30-line plugin instead of an error-bar library — fewer dependencies.
