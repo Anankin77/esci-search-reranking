@@ -1,0 +1,2002 @@
+{
+  "chosen_family": "lgbm_pointwise",
+  "n_test_queries": 8956,
+  "n_excluded_zero_idcg": 0,
+  "n_near_dup": 101,
+  "all": {
+    "table": {
+      "random": {
+        "ndcg": {
+          "mean": 0.7468672712395552,
+          "lo": 0.7440183096795232,
+          "hi": 0.7497743808444055
+        },
+        "ndcg5": {
+          "mean": 0.5021805002442039,
+          "lo": 0.49812836226533647,
+          "hi": 0.5063389646869542
+        },
+        "p1": {
+          "mean": 0.43562974542206345,
+          "lo": 0.4301737661902635,
+          "hi": 0.44098956007146045
+        }
+      },
+      "bm25_title": {
+        "ndcg": {
+          "mean": 0.8176204856419843,
+          "lo": 0.8143611214110779,
+          "hi": 0.820829200602955
+        },
+        "ndcg5": {
+          "mean": 0.6379861958461168,
+          "lo": 0.6322403849662581,
+          "hi": 0.64361503505371
+        },
+        "p1": {
+          "mean": 0.6202545779365788,
+          "lo": 0.610534836980795,
+          "hi": 0.630527020991514
+        }
+      },
+      "bm25_all": {
+        "ndcg": {
+          "mean": 0.820444290829849,
+          "lo": 0.8169949185439314,
+          "hi": 0.8238594905597119
+        },
+        "ndcg5": {
+          "mean": 0.6445823468218564,
+          "lo": 0.6387771770011067,
+          "hi": 0.6504214536814279
+        },
+        "p1": {
+          "mean": 0.6225993747208576,
+          "lo": 0.6119919606967397,
+          "hi": 0.6323163242518982
+        }
+      },
+      "encoder_cosine": {
+        "ndcg": {
+          "mean": 0.827993243365179,
+          "lo": 0.824834726606766,
+          "hi": 0.8309654267252355
+        },
+        "ndcg5": {
+          "mean": 0.6577133821809176,
+          "lo": 0.6522937931870896,
+          "hi": 0.6632369371978205
+        },
+        "p1": {
+          "mean": 0.6395712371594462,
+          "lo": 0.6291843456900402,
+          "hi": 0.6489532157213042
+        }
+      },
+      "logreg": {
+        "ndcg": {
+          "mean": 0.8497987957794763,
+          "lo": 0.8467292988220616,
+          "hi": 0.852567290126456
+        },
+        "ndcg5": {
+          "mean": 0.7039735987754627,
+          "lo": 0.6983809782191143,
+          "hi": 0.708972389620422
+        },
+        "p1": {
+          "mean": 0.7012058954890577,
+          "lo": 0.6907073470299241,
+          "hi": 0.7098034836980796
+        }
+      },
+      "lgbm_pointwise": {
+        "ndcg": {
+          "mean": 0.8537883117783649,
+          "lo": 0.8507454552093724,
+          "hi": 0.8568871467983311
+        },
+        "ndcg5": {
+          "mean": 0.7132346612347698,
+          "lo": 0.7078880386573165,
+          "hi": 0.718532886386695
+        },
+        "p1": {
+          "mean": 0.71572130415364,
+          "lo": 0.706339325591782,
+          "hi": 0.7248771773112996
+        }
+      },
+      "lgbm_lambdarank": {
+        "ndcg": {
+          "mean": 0.8540748889808251,
+          "lo": 0.8510604607329655,
+          "hi": 0.8571576341782677
+        },
+        "ndcg5": {
+          "mean": 0.7119224825539899,
+          "lo": 0.7066559709201143,
+          "hi": 0.7170986694734102
+        },
+        "p1": {
+          "mean": 0.7135998213488164,
+          "lo": 0.703885663242519,
+          "hi": 0.7228673514962036
+        }
+      },
+      "model": {
+        "ndcg": {
+          "mean": 0.8537883117783649,
+          "lo": 0.8507454552093724,
+          "hi": 0.8568871467983311
+        },
+        "ndcg5": {
+          "mean": 0.7132346612347698,
+          "lo": 0.7078880386573165,
+          "hi": 0.718532886386695
+        },
+        "p1": {
+          "mean": 0.71572130415364,
+          "lo": 0.706339325591782,
+          "hi": 0.7248771773112996
+        }
+      }
+    },
+    "diff": {
+      "model - bm25_title": {
+        "ndcg": {
+          "mean": 0.03616782613638047,
+          "lo": 0.03373011913007484,
+          "hi": 0.03858603092485356
+        },
+        "ndcg5": {
+          "mean": 0.07524846538865279,
+          "lo": 0.06986758030459148,
+          "hi": 0.07998401595644511
+        },
+        "p1": {
+          "mean": 0.09546672621706119,
+          "lo": 0.08519428316212595,
+          "hi": 0.1052925413130862
+        }
+      },
+      "model - bm25_all": {
+        "ndcg": {
+          "mean": 0.033344020948515844,
+          "lo": 0.030938000706026356,
+          "hi": 0.03585963462317217
+        },
+        "ndcg5": {
+          "mean": 0.0686523144129132,
+          "lo": 0.06389981849901005,
+          "hi": 0.07380952079126571
+        },
+        "p1": {
+          "mean": 0.0931219294327825,
+          "lo": 0.08295276909334524,
+          "hi": 0.10362047789191603
+        }
+      },
+      "model - encoder_cosine": {
+        "ndcg": {
+          "mean": 0.025795068413185823,
+          "lo": 0.02358250506809402,
+          "hi": 0.027924040600344154
+        },
+        "ndcg5": {
+          "mean": 0.05552127905385211,
+          "lo": 0.0514505310012297,
+          "hi": 0.05964495622502033
+        },
+        "p1": {
+          "mean": 0.07615006699419384,
+          "lo": 0.06654477445288075,
+          "hi": 0.08642251004912907
+        }
+      },
+      "model - random": {
+        "ndcg": {
+          "mean": 0.10692104053880964,
+          "lo": 0.10417720654797345,
+          "hi": 0.10970388190154277
+        },
+        "ndcg5": {
+          "mean": 0.21105416099056573,
+          "lo": 0.20596240063503735,
+          "hi": 0.216503678218288
+        },
+        "p1": {
+          "mean": 0.2800915587315766,
+          "lo": 0.27083589213934794,
+          "hi": 0.2891022778025904
+        }
+      }
+    },
+    "diff_models": {
+      "logreg": {
+        "logreg - bm25_title": {
+          "ndcg": {
+            "mean": 0.03217831013749188,
+            "lo": 0.02966020862806606,
+            "hi": 0.034538135725815496
+          },
+          "ndcg5": {
+            "mean": 0.06598740292934584,
+            "lo": 0.06089819122436227,
+            "hi": 0.07065416280047596
+          },
+          "p1": {
+            "mean": 0.08095131755247878,
+            "lo": 0.07078494863778473,
+            "hi": 0.09077992407324699
+          }
+        }
+      },
+      "lgbm_pointwise": {
+        "lgbm_pointwise - bm25_title": {
+          "ndcg": {
+            "mean": 0.03616782613638047,
+            "lo": 0.03373011913007484,
+            "hi": 0.03858603092485356
+          },
+          "ndcg5": {
+            "mean": 0.07524846538865279,
+            "lo": 0.06986758030459148,
+            "hi": 0.07998401595644511
+          },
+          "p1": {
+            "mean": 0.09546672621706119,
+            "lo": 0.08519428316212595,
+            "hi": 0.1052925413130862
+          }
+        }
+      },
+      "lgbm_lambdarank": {
+        "lgbm_lambdarank - bm25_title": {
+          "ndcg": {
+            "mean": 0.036454403338840716,
+            "lo": 0.03408203160146764,
+            "hi": 0.03867990075016997
+          },
+          "ndcg5": {
+            "mean": 0.07393628670787306,
+            "lo": 0.06884662261314749,
+            "hi": 0.07859938476438241
+          },
+          "p1": {
+            "mean": 0.0933452434122376,
+            "lo": 0.08340218847699866,
+            "hi": 0.1029477445288075
+          }
+        }
+      }
+    }
+  },
+  "without_near_dup": {
+    "table": {
+      "random": {
+        "ndcg": {
+          "mean": 0.7465474457541592,
+          "lo": 0.7437487449642091,
+          "hi": 0.7493165962118672
+        },
+        "ndcg5": {
+          "mean": 0.5016571578131632,
+          "lo": 0.4976007643870544,
+          "hi": 0.5057312913630063
+        },
+        "p1": {
+          "mean": 0.43491247882552225,
+          "lo": 0.4298006775832863,
+          "hi": 0.4401657255787691
+        }
+      },
+      "bm25_title": {
+        "ndcg": {
+          "mean": 0.8174306401949696,
+          "lo": 0.8142675361316432,
+          "hi": 0.8204873840826965
+        },
+        "ndcg5": {
+          "mean": 0.6376378340142058,
+          "lo": 0.6319653125749303,
+          "hi": 0.6426937198422276
+        },
+        "p1": {
+          "mean": 0.6199887069452287,
+          "lo": 0.6102766798418973,
+          "hi": 0.6290231507622812
+        }
+      },
+      "bm25_all": {
+        "ndcg": {
+          "mean": 0.8205124735429403,
+          "lo": 0.8172215162342774,
+          "hi": 0.8237722550671795
+        },
+        "ndcg5": {
+          "mean": 0.6449312462276403,
+          "lo": 0.638857639853121,
+          "hi": 0.650563246942526
+        },
+        "p1": {
+          "mean": 0.6234895539243366,
+          "lo": 0.6133258046301524,
+          "hi": 0.6335431959345003
+        }
+      },
+      "encoder_cosine": {
+        "ndcg": {
+          "mean": 0.8278158216211993,
+          "lo": 0.8248905714894555,
+          "hi": 0.8308364094751612
+        },
+        "ndcg5": {
+          "mean": 0.6574510009380057,
+          "lo": 0.6521615109117792,
+          "hi": 0.6627643940057306
+        },
+        "p1": {
+          "mean": 0.6392998306041784,
+          "lo": 0.6290231507622812,
+          "hi": 0.6490118577075099
+        }
+      },
+      "logreg": {
+        "ndcg": {
+          "mean": 0.8494733176239683,
+          "lo": 0.8464705418847769,
+          "hi": 0.8523467517565703
+        },
+        "ndcg5": {
+          "mean": 0.7034263896615227,
+          "lo": 0.6979057654151763,
+          "hi": 0.7086720843824685
+        },
+        "p1": {
+          "mean": 0.700395256916996,
+          "lo": 0.690790513833992,
+          "hi": 0.7095426312817618
+        }
+      },
+      "lgbm_pointwise": {
+        "ndcg": {
+          "mean": 0.85353268044656,
+          "lo": 0.850453254138865,
+          "hi": 0.8564078389094663
+        },
+        "ndcg5": {
+          "mean": 0.7128814402990616,
+          "lo": 0.7074915707043808,
+          "hi": 0.717879868162441
+        },
+        "p1": {
+          "mean": 0.7151891586674195,
+          "lo": 0.7054771315640881,
+          "hi": 0.7239977413890457
+        }
+      },
+      "lgbm_lambdarank": {
+        "ndcg": {
+          "mean": 0.8538237125532431,
+          "lo": 0.8507795987170295,
+          "hi": 0.8566682473043898
+        },
+        "ndcg5": {
+          "mean": 0.7115161644277375,
+          "lo": 0.7058958321874508,
+          "hi": 0.7163504299483237
+        },
+        "p1": {
+          "mean": 0.7128176171654432,
+          "lo": 0.7032185206098249,
+          "hi": 0.7216290231507623
+        }
+      },
+      "model": {
+        "ndcg": {
+          "mean": 0.85353268044656,
+          "lo": 0.850453254138865,
+          "hi": 0.8564078389094663
+        },
+        "ndcg5": {
+          "mean": 0.7128814402990616,
+          "lo": 0.7074915707043808,
+          "hi": 0.717879868162441
+        },
+        "p1": {
+          "mean": 0.7151891586674195,
+          "lo": 0.7054771315640881,
+          "hi": 0.7239977413890457
+        }
+      }
+    },
+    "diff": {
+      "model - bm25_title": {
+        "ndcg": {
+          "mean": 0.03610204025159055,
+          "lo": 0.03360655296404543,
+          "hi": 0.03844561288452902
+        },
+        "ndcg5": {
+          "mean": 0.07524360628485574,
+          "lo": 0.0703624327065349,
+          "hi": 0.08030633718932127
+        },
+        "p1": {
+          "mean": 0.09520045172219085,
+          "lo": 0.08446922642574817,
+          "hi": 0.10548560135516656
+        }
+      },
+      "model - bm25_all": {
+        "ndcg": {
+          "mean": 0.03302020690361977,
+          "lo": 0.0305244120207854,
+          "hi": 0.03551535470162751
+        },
+        "ndcg5": {
+          "mean": 0.06795019407142129,
+          "lo": 0.06283379435569922,
+          "hi": 0.07308620232483545
+        },
+        "p1": {
+          "mean": 0.091699604743083,
+          "lo": 0.08051948051948052,
+          "hi": 0.10141163184641445
+        }
+      },
+      "model - encoder_cosine": {
+        "ndcg": {
+          "mean": 0.02571685882536081,
+          "lo": 0.023608771992508142,
+          "hi": 0.0278715573759663
+        },
+        "ndcg5": {
+          "mean": 0.05543043936105595,
+          "lo": 0.051404990039966826,
+          "hi": 0.05967228266434172
+        },
+        "p1": {
+          "mean": 0.07588932806324111,
+          "lo": 0.06617730095990966,
+          "hi": 0.08571710897797855
+        }
+      },
+      "model - random": {
+        "ndcg": {
+          "mean": 0.10698523469240079,
+          "lo": 0.10406720763010938,
+          "hi": 0.10972716039546065
+        },
+        "ndcg5": {
+          "mean": 0.2112242824858983,
+          "lo": 0.20568948755815847,
+          "hi": 0.21600388143231564
+        },
+        "p1": {
+          "mean": 0.28027667984189725,
+          "lo": 0.2703270750988142,
+          "hi": 0.289436617730096
+        }
+      }
+    }
+  },
+  "win_tie_loss": {
+    "win": 5549,
+    "tie": 189,
+    "loss": 3218
+  },
+  "delta_hist": {
+    "edges": [
+      -0.6,
+      -0.55,
+      -0.5,
+      -0.45,
+      -0.4,
+      -0.35,
+      -0.3,
+      -0.25,
+      -0.2,
+      -0.15,
+      -0.1,
+      -0.05,
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6
+    ],
+    "counts": [
+      3,
+      4,
+      8,
+      7,
+      18,
+      21,
+      35,
+      93,
+      179,
+      319,
+      639,
+      1892,
+      2619,
+      1249,
+      674,
+      437,
+      260,
+      185,
+      117,
+      92,
+      53,
+      23,
+      12,
+      17
+    ]
+  },
+  "categories": {
+    "numeric": {
+      "n": 1833,
+      "analysis_only": false,
+      "description": "query contains a digit (sizes, quantities, model numbers)",
+      "model_ndcg": {
+        "mean": 0.8336559031788904,
+        "lo": 0.8262864790226285,
+        "hi": 0.840516288148878
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.7916823577531488,
+        "lo": 0.7833843698221942,
+        "hi": 0.7989142031239533
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.04197354542574159,
+        "lo": 0.03657722242690825,
+        "hi": 0.04804784225032245
+      },
+      "delta_vs_encoder": {
+        "mean": 0.04300269427878981,
+        "lo": 0.0370889199584853,
+        "hi": 0.04885065405833012
+      },
+      "win": 1151,
+      "loss": 655
+    },
+    "negation": {
+      "n": 760,
+      "analysis_only": false,
+      "description": "query contains without / no / not / non / free",
+      "model_ndcg": {
+        "mean": 0.8098251279358036,
+        "lo": 0.7984054070534424,
+        "hi": 0.8219090080046689
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.7633624252755106,
+        "lo": 0.7521802088264906,
+        "hi": 0.7756432330353028
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.04646270266029316,
+        "lo": 0.03825803099436513,
+        "hi": 0.05535717429600523
+      },
+      "delta_vs_encoder": {
+        "mean": 0.047332236502093825,
+        "lo": 0.038383722710165165,
+        "hi": 0.056373009702238984
+      },
+      "win": 489,
+      "loss": 266
+    },
+    "brand_in_query": {
+      "n": 1168,
+      "analysis_only": false,
+      "description": "query names a brand from the training-split brand vocabulary",
+      "model_ndcg": {
+        "mean": 0.8618105794766626,
+        "lo": 0.8538028543089442,
+        "hi": 0.8692474559072773
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.8227785670718913,
+        "lo": 0.8139754266064076,
+        "hi": 0.8309884276680497
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.039032012404771166,
+        "lo": 0.03277814049952653,
+        "hi": 0.045510764442271284
+      },
+      "delta_vs_encoder": {
+        "mean": 0.032054506074930336,
+        "lo": 0.02580599543632895,
+        "hi": 0.03811856790751019
+      },
+      "win": 739,
+      "loss": 395
+    },
+    "colour_in_query": {
+      "n": 876,
+      "analysis_only": false,
+      "description": "query contains a colour word",
+      "model_ndcg": {
+        "mean": 0.8541519375278863,
+        "lo": 0.8447472978313199,
+        "hi": 0.8630641438748302
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.8229493592954613,
+        "lo": 0.813498972404297,
+        "hi": 0.8328283881584561
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.031202578232424998,
+        "lo": 0.02363502557566243,
+        "hi": 0.03864091238256265
+      },
+      "delta_vs_encoder": {
+        "mean": 0.0257572177126891,
+        "lo": 0.017458565896427948,
+        "hi": 0.032581195460523765
+      },
+      "win": 539,
+      "loss": 324
+    },
+    "short": {
+      "n": 1717,
+      "analysis_only": false,
+      "description": "query has at most 2 tokens",
+      "model_ndcg": {
+        "mean": 0.8571217712371709,
+        "lo": 0.8497774531343665,
+        "hi": 0.864013171408803
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.8130445537725743,
+        "lo": 0.8047765027799023,
+        "hi": 0.8209558553826963
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.04407721746459655,
+        "lo": 0.037906173588107335,
+        "hi": 0.0503174854962861
+      },
+      "delta_vs_encoder": {
+        "mean": 0.02275509054866109,
+        "lo": 0.017728921755855557,
+        "hi": 0.027475177106862342
+      },
+      "win": 1084,
+      "loss": 595
+    },
+    "long": {
+      "n": 1290,
+      "analysis_only": false,
+      "description": "query has at least 6 tokens",
+      "model_ndcg": {
+        "mean": 0.8360473297300842,
+        "lo": 0.8281883213811339,
+        "hi": 0.8434413409362889
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.8036260617750121,
+        "lo": 0.7952604754853734,
+        "hi": 0.8114197624353031
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.03242126795507201,
+        "lo": 0.025982126753771696,
+        "hi": 0.038794205679933975
+      },
+      "delta_vs_encoder": {
+        "mean": 0.031031994940878382,
+        "lo": 0.024267537122940563,
+        "hi": 0.03706241708567088
+      },
+      "win": 784,
+      "loss": 474
+    },
+    "substitute_heavy": {
+      "n": 3066,
+      "analysis_only": true,
+      "description": "at least 50% of candidates are labelled Substitute (label-based, analysis only)",
+      "model_ndcg": {
+        "mean": 0.8264863393024674,
+        "lo": 0.8215562902090303,
+        "hi": 0.8320028208676742
+      },
+      "bm25_title_ndcg": {
+        "mean": 0.7819978132827542,
+        "lo": 0.7768604346790448,
+        "hi": 0.7868428165460928
+      },
+      "delta_vs_bm25_title": {
+        "mean": 0.04448852601971332,
+        "lo": 0.03997784539696453,
+        "hi": 0.049185143644533615
+      },
+      "delta_vs_encoder": {
+        "mean": 0.04227844699384093,
+        "lo": 0.03829599884101683,
+        "hi": 0.046451393955225684
+      },
+      "win": 1898,
+      "loss": 1080
+    }
+  },
+  "examples": {
+    "helps": [
+      {
+        "query_id": 8630,
+        "query": "amazon valentine offuce",
+        "delta": 0.755349457881774,
+        "bm25_ndcg": 0.24465054211822604,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Amazon Basics Woodcased #2 Pencils, Pre-sharpened, HB Lead - Box of 150, Bulk Bo",
+            "brand": "Amazon Basics"
+          },
+          {
+            "label": "I",
+            "title": "Amazon Brand - Lark & Ro Women's Classic Cap Sleeve V-Neck Compact Matte Jersey ",
+            "brand": "Lark & Ro"
+          },
+          {
+            "label": "I",
+            "title": "Amazon Basics Narrow Ruled 5 x 8-Inch Writing Pad - White (50 Sheet Paper Pads, ",
+            "brand": "Amazon Basics"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Love Doctor's Office - Valentine's Day Heart Surgery",
+            "brand": "Gluten Free Games"
+          },
+          {
+            "label": "I",
+            "title": "The Office: Season 2",
+            "brand": "uni"
+          },
+          {
+            "label": "I",
+            "title": "Houseboat",
+            "brand": "PARAMOUNT HOME VIDEO"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.10, spelling-level overlap +0.08"
+      },
+      {
+        "query_id": 75759,
+        "query": "onses for men",
+        "delta": 0.7297618455726802,
+        "bm25_ndcg": 0.27023815442731974,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Onse Upon A Time There Was A Girl Who Really Loved Elephants And Dogs Unisex Sho",
+            "brand": "YAMESTORE"
+          },
+          {
+            "label": "I",
+            "title": "Alph-onse Full Metal Alch-emist Backpacks Cute Patterns Printed Bag Perfect Size",
+            "brand": "Amolu"
+          },
+          {
+            "label": "I",
+            "title": "Knee Sleeves (SOLD AS A PAIR of 2) for Cross Training Squats Weightlifting Baske",
+            "brand": "Grip Power Pads"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Disney Men's Finding Dory Uniform Union Suit, Blue, L",
+            "brand": "Disney"
+          },
+          {
+            "label": "I",
+            "title": "Onse Upon A Time There Was A Girl Who Really Loved Elephants And Dogs Unisex Sho",
+            "brand": "YAMESTORE"
+          },
+          {
+            "label": "I",
+            "title": "Riparo Mens Genuine Leather Reverse Stitched Half-Finger Driving Motorcycle Glov",
+            "brand": "Riparo"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates -0.05, keyword match in title +0.03"
+      },
+      {
+        "query_id": 49105,
+        "query": "hanukkah hats",
+        "delta": 0.7271012060799168,
+        "bm25_ndcg": 0.260582867034434,
+        "model_ndcg": 0.9876840731143508,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Big Dot of Happiness Happy Hanukkah - Hanukkah & Chanukah Photo Booth Props Kit ",
+            "brand": "Big Dot of Happiness"
+          },
+          {
+            "label": "I",
+            "title": "MAGA Dreidel Dreidel Make America Great Again - Hanukkah Draydel (Set of 4)",
+            "brand": "MAGA Dreidel"
+          },
+          {
+            "label": "I",
+            "title": "Dreidel Headbands - Fun for Hanukkah - Personal Decorations for the Festival of ",
+            "brand": "The Dreidel Company"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Happy Chanukah Plush Hat Standard",
+            "brand": "elope"
+          },
+          {
+            "label": "I",
+            "title": "Menorah Headbands - Fun for Hanukkah - Personal Decorations for the Festival of ",
+            "brand": "The Dreidel Company"
+          },
+          {
+            "label": "S",
+            "title": "Forum Novelties 81672 Chanukah Hat Oy, Multi-Color, One Size",
+            "brand": "Forum Novelties"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: keyword match in title +0.09, spelling-level overlap +0.09"
+      },
+      {
+        "query_id": 37789,
+        "query": "entertainment stand for tv up to 90",
+        "delta": 0.7210570543488701,
+        "bm25_ndcg": 0.27894294565112987,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "FURINNO JAYA Large Entertainment Stand for TV Up to 50 Inch, Blackwood",
+            "brand": "Furinno"
+          },
+          {
+            "label": "I",
+            "title": "VASAGLE TV Stand, TV Cabinet for TVs up to 43 Inches, Mid-Century Modern TV Cons",
+            "brand": "VASAGLE"
+          },
+          {
+            "label": "I",
+            "title": "Ameriwood Home Carson TV Stand for TVs up to 70\", Cherry",
+            "brand": "Ameriwood Home"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "MEBLE FURNITURE & RUGS TV Stand Roma Matte Body High Gloss Doors Modern TV Stand",
+            "brand": "MEBLE FURNITURE & RUGS"
+          },
+          {
+            "label": "I",
+            "title": "FURINNO JAYA Large Entertainment Stand for TV Up to 50 Inch, Blackwood",
+            "brand": "Furinno"
+          },
+          {
+            "label": "I",
+            "title": "VASAGLE TV Stand, TV Cabinet for TVs up to 43 Inches, Mid-Century Modern TV Cons",
+            "brand": "VASAGLE"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: query words found anywhere +0.15, number conflicts with query +0.10"
+      },
+      {
+        "query_id": 5673,
+        "query": "I want a replacement chrome book with a touch screen. So really it would be an upgrade. I want a large screen and a good memory",
+        "delta": 0.7104209740643834,
+        "bm25_ndcg": 0.2895790259356165,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Baby/Toddler/Kid 'I See It, I Like It, I Want It, DAD Bought It Shirt",
+            "brand": "Wild Wren Co."
+          },
+          {
+            "label": "I",
+            "title": "ActRaise I Couldn\u2019t Become a Hero, So I Reluctantly Decided to Get a Job Anime F",
+            "brand": "ActRaise"
+          },
+          {
+            "label": "I",
+            "title": "Jellycat Board Books, If I were a Panda",
+            "brand": "Jellycat"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Lenovo Chromebook C330 2-in-1 Convertible Laptop, 11.6-Inch HD (1366 x 768) IPS ",
+            "brand": "Lenovo"
+          },
+          {
+            "label": "S",
+            "title": "Lenovo Chromebook S330 Laptop, 14-Inch FHD (1920 x 1080) Display, MediaTek MT817",
+            "brand": "Lenovo"
+          },
+          {
+            "label": "I",
+            "title": "When This Virus is Over Graphic Novelty Sarcastic Funny T Shirt XL Black",
+            "brand": "Feelin Good Tees"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.23, query length +0.11"
+      },
+      {
+        "query_id": 70870,
+        "query": "moto g7 play",
+        "delta": 0.6482394938932563,
+        "bm25_ndcg": 0.35176050610674375,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "C",
+            "title": "Moto G7 Play Case, Moto G7 Play Phone Case, HNHYGETE Soft Slim Shockproof Anti-F",
+            "brand": "HNHYGETE"
+          },
+          {
+            "label": "C",
+            "title": "Moto G7 Play Case (Not Fit Moto G7) with [2 Pack] Tempered Glass Screen Protecto",
+            "brand": "LeYi"
+          },
+          {
+            "label": "C",
+            "title": "Moto G7 Play Rugged Clear Case, Moto G7 Optimo Case, Poetic Full Body Hybrid Sho",
+            "brand": "Poetic"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Moto G7 play | Unlocked | Made for US by Motorola | 2/32GB | 13MP Camera | Blue",
+            "brand": "Motorola"
+          },
+          {
+            "label": "E",
+            "title": "Moto G7 Play with Alexa Push-to-Talk \u2013 Unlocked \u2013 32 GB \u2013 Deep Indigo (US Warran",
+            "brand": "Motorola"
+          },
+          {
+            "label": "C",
+            "title": "G7 Play LCD Screen Replacement Touch Display Digitizer Assembly (Black) for Moto",
+            "brand": "Fontecho"
+          }
+        ],
+        "diagnosis": "BM25 #1 is C, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates +0.07, keyword score vs other candidates -0.06"
+      },
+      {
+        "query_id": 46749,
+        "query": "google watch for women",
+        "delta": 0.6437928128919779,
+        "bm25_ndcg": 0.3562071871080222,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Star Trek Next Generation 2021 Bluetooth Communicator Badge - TNG Bluetooth Comb",
+            "brand": "FAMETEK"
+          },
+          {
+            "label": "I",
+            "title": "Playz Bath Bomb Bonanza Science Activity, Craft, & Experiment Kit - 23+ Tools to",
+            "brand": "Playz"
+          },
+          {
+            "label": "I",
+            "title": "Pricetitution Card Game (from Shark Tank!) - Game Nights, Dinner Parties, Funny ",
+            "brand": "Pricetitution"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Wakmr Smart Wristband Thermometer Pedometer Sports Fitness Activity Wristband(Bl",
+            "brand": "Wakmr"
+          },
+          {
+            "label": "I",
+            "title": "Makkalen Wooden Bank Safe Money Box Savings with Lock Wood Carving Handmade",
+            "brand": "Makkalen furniture"
+          },
+          {
+            "label": "I",
+            "title": "Sacow PC Micro USB Cable Male Host to USB Female OTG Adapter Android Tablet Phon",
+            "brand": "Sacow"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: query words found anywhere +0.20, keyword score vs other candidates +0.12"
+      },
+      {
+        "query_id": 13849,
+        "query": "batman dvd",
+        "delta": 0.6384552131843675,
+        "bm25_ndcg": 0.35945902359565524,
+        "model_ndcg": 0.9979142367800227,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "DC Direct Batman Year One DVD Batman Maquette",
+            "brand": "DC Comics"
+          },
+          {
+            "label": "I",
+            "title": "DC Direct Superman/Batman: Public Enemies DVD Batman Maquette",
+            "brand": "DC Comics"
+          },
+          {
+            "label": "I",
+            "title": "The Batman - EXP Extreme Power - Batman Action Figure with Bonus DVD",
+            "brand": ""
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "LEGO Batman 3: Beyond Gotham (PC DVD)",
+            "brand": "WB Games"
+          },
+          {
+            "label": "C",
+            "title": "Batman DVD Player with Remote Control",
+            "brand": "Kids Station Toys"
+          },
+          {
+            "label": "I",
+            "title": "DC Direct Batman Year One DVD Batman Maquette",
+            "brand": "DC Comics"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.07, no colour listed -0.01"
+      },
+      {
+        "query_id": 49153,
+        "query": "happypills",
+        "delta": 0.6037373728431811,
+        "bm25_ndcg": 0.3962626271568189,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Joy-Filled | 100% Plant-Based Supplement for Anxiety Relief & Mood Enhancer | He",
+            "brand": "Happy Healthy Hippie"
+          },
+          {
+            "label": "I",
+            "title": "Dr. Emil Nutrition 200 MG 5-HTP Plus Formula for Mood, Stress, and Sleep Support",
+            "brand": "DR EMIL NUTRITION"
+          },
+          {
+            "label": "I",
+            "title": "Dr. Emil Nutrition Organic Lions Mane Mushroom Capsule with Absorption Enhancers",
+            "brand": "DR EMIL NUTRITION"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Brain Pharma Happy Pills, 60 Count",
+            "brand": "Brain Pharma"
+          },
+          {
+            "label": "E",
+            "title": "Just For Laughs Happy Pill Giggling Plush 6-Pack",
+            "brand": "Just For Laughs"
+          },
+          {
+            "label": "E",
+            "title": "Happy Pills",
+            "brand": ""
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: spelling-level overlap +0.17, keyword match in title +0.03"
+      },
+      {
+        "query_id": 29049,
+        "query": "cordless wall hanging fountains",
+        "delta": 0.5868490532646178,
+        "bm25_ndcg": 0.4131509467353823,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Cordless LED Orb RGB Sphere Lamp with Remote, 6 Inch Color Changing Glow Ball Mo",
+            "brand": "GEECR"
+          },
+          {
+            "label": "I",
+            "title": "4-Pack Solar Powered Mason Jar Lights (Mason Jar & Handle Included),5 Colors 20 ",
+            "brand": "CHBJDAN"
+          },
+          {
+            "label": "I",
+            "title": "LeiDrail Solar Lantern Outdoor Christmas Hanging Lanterns Garden Metal Decorativ",
+            "brand": "LeiDrail"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "WICHEMI Tabletop Water Fountain with Rolling Ball, Feng Shui Zen Indoor Waterfal",
+            "brand": "WICHEMI"
+          },
+          {
+            "label": "E",
+            "title": "iPettie Clover LED Light Pet Water Fountain 2.3L/78oz, Ultra Quiet Automatic Wat",
+            "brand": "iPettie"
+          },
+          {
+            "label": "E",
+            "title": "Sunnydaze Solar Water Fountain with Battery Backup - Modern Cascading Bowls - LE",
+            "brand": "Sunnydaze"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: keyword score vs other candidates -0.08, meaning similar to title+bullets +0.07"
+      },
+      {
+        "query_id": 114395,
+        "query": "xiaomi mi 9t pro",
+        "delta": 0.5825000706161634,
+        "bm25_ndcg": 0.410000995737354,
+        "model_ndcg": 0.9925010663535174,
+        "bm25_top3": [
+          {
+            "label": "C",
+            "title": "Ferilinso Case for Xiaomi Mi 9T /Mi 9T Pro,Ultra [Slim Thin] Scratch Resistant T",
+            "brand": "Ferilinso"
+          },
+          {
+            "label": "C",
+            "title": "[2 Pack] QHOHQ Screen Protector for Xiaomi Mi 9T / 9T Pro,[Full Coverage] Temper",
+            "brand": "QHOHQ"
+          },
+          {
+            "label": "C",
+            "title": "Ferilinso Screen Protector for Xiaomi Mi 9T /Xiaomi Mi 9T Pro,[3 Pack] Tempered ",
+            "brand": "Ferilinso"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Xiaomi Mi 9T Pro (128GB, 6GB RAM) 6.39\" Display, Snapdragon 855, AI Rear Triple ",
+            "brand": "Xiaomi"
+          },
+          {
+            "label": "S",
+            "title": "Xiaomi Mi 9T (128GB, 6GB RAM) 6.39\" AMOLED FHD + Full Screen Display, 48MP Tripl",
+            "brand": "Xiaomi"
+          },
+          {
+            "label": "S",
+            "title": "Xiaomi Mi 9T (64GB, 6GB RAM) 6.39\" AMOLED FHD + Full Screen Display, 48MP Triple",
+            "brand": "Xiaomi"
+          }
+        ],
+        "diagnosis": "BM25 #1 is C, model #1 is E; model #1 vs BM25 #1 contribution gap: brand conflicts with query +0.09, meaning score vs other candidates +0.08"
+      },
+      {
+        "query_id": 54366,
+        "query": "iphone 8 screen protector not plus",
+        "delta": 0.5789217670134006,
+        "bm25_ndcg": 0.4190200225128862,
+        "model_ndcg": 0.9979417895262869,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Tech Armor HD Clear Film Screen Protector (Not Glass) for Apple iPhone 7 Plus, i",
+            "brand": "Tech Armor"
+          },
+          {
+            "label": "I",
+            "title": "Purity Glass Screen Protector for iPhone 8 Plus / 7 Plus (3-Pack) [w/Installatio",
+            "brand": "Purity"
+          },
+          {
+            "label": "I",
+            "title": "uShield Privacy Screen Protector for iPhone 8 Plus, iPhone 7 Plus - 3 Pack (w/In",
+            "brand": "uShield"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Ailun 0.33mm Screen Protector Compatible for iPhone 8,7,6s,6, 4.7-Inch, 3 Pack 2",
+            "brand": "Ailun"
+          },
+          {
+            "label": "E",
+            "title": "amFilm Screen Protector for iPhone SE (2020), 8, 7, 6S, 6 (3 Pack) HD Clear, Fle",
+            "brand": "amFilm"
+          },
+          {
+            "label": "E",
+            "title": "Power Theory Designed for iPhone 8 Screen Protector/iPhone 7 Screen Protector [2",
+            "brand": "Power Theory"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: title has the excluded term +0.22, query words found anywhere +0.05"
+      },
+      {
+        "query_id": 78450,
+        "query": "peanuts christmas sheet music",
+        "delta": 0.5693234419266069,
+        "bm25_ndcg": 0.43067655807339306,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "Linus and Lucy - Peanuts - Sheet Music - Charlie Brown Theme (Vince Guaraldi, Pi",
+            "brand": ""
+          },
+          {
+            "label": "I",
+            "title": "The Peanuts Music Activity Book: An Introduction to Music",
+            "brand": "Hal Leonard"
+          },
+          {
+            "label": "I",
+            "title": "Hal Leonard - Vince Guaraldi: A Charlie Brown Christmas Sheet Music",
+            "brand": ""
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "The Peanuts Christmas Carol Collection (Easy Piano (Hal Leonard))",
+            "brand": "Hal Leonard"
+          },
+          {
+            "label": "I",
+            "title": "A Charlie Brown Christmas - Easy Piano Songbook",
+            "brand": "Hal Leonard"
+          },
+          {
+            "label": "I",
+            "title": "The Peanuts Music Activity Book: An Introduction to Music",
+            "brand": "Hal Leonard"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: no brand listed +0.06, spelling-level overlap +0.04"
+      },
+      {
+        "query_id": 55678,
+        "query": "jeans clothing",
+        "delta": 0.5693234419266069,
+        "bm25_ndcg": 0.43067655807339306,
+        "model_ndcg": 1.0,
+        "bm25_top3": [
+          {
+            "label": "I",
+            "title": "FabStix Retro Lipstick Iron on Patch or Sticker Applique for Kids Womens Mens Cl",
+            "brand": "Patchettes"
+          },
+          {
+            "label": "I",
+            "title": "(5 Sheets) Baby Iron On Transfers Patches Set, MWOOT Kids Appliques Assorted Car",
+            "brand": "MWOOT"
+          },
+          {
+            "label": "I",
+            "title": "Versace Versace Versus Blue Jeans - Edt Spray 2.5 Oz, 2.5 oz",
+            "brand": "Versace"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "Women's Mid Rise Shorts Teen Girls Summer Slim Fit Frayed Raw Hem Ripped Denim J",
+            "brand": "Fanteecy"
+          },
+          {
+            "label": "I",
+            "title": "(5 Sheets) Baby Iron On Transfers Patches Set, MWOOT Kids Appliques Assorted Car",
+            "brand": "MWOOT"
+          },
+          {
+            "label": "I",
+            "title": "FabStix Retro Lipstick Iron on Patch or Sticker Applique for Kids Womens Mens Cl",
+            "brand": "Patchettes"
+          }
+        ],
+        "diagnosis": "BM25 #1 is I, model #1 is E; model #1 vs BM25 #1 contribution gap: query words found anywhere -0.16, meaning similar to title+bullets +0.12"
+      },
+      {
+        "query_id": 15246,
+        "query": "bettervent",
+        "delta": 0.5670492426690563,
+        "bm25_ndcg": 0.3643104743215935,
+        "model_ndcg": 0.9313597169906499,
+        "bm25_top3": [
+          {
+            "label": "C",
+            "title": "Essential Values 12 Pack Compatible Replacement Filters (60 Dryer Loads Total) f",
+            "brand": "Essential Values"
+          },
+          {
+            "label": "C",
+            "title": "(Pack of 18) 7\" x 8-1/4\" - Replacement Polyester Filters for The BetterVent Indo",
+            "brand": "AirstarFilters"
+          },
+          {
+            "label": "S",
+            "title": "Continental Fan Lint Trap",
+            "brand": "Global Industrial"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "E",
+            "title": "BetterVent Indoor Dryer Vent - Protects Indoor Air Quality and Saves Energy, Ele",
+            "brand": "BetterVent"
+          },
+          {
+            "label": "C",
+            "title": "BetterVent Polyester Filter Replacements - Official Manufacturer\u2019s Product, 6-Pa",
+            "brand": "BetterVent"
+          },
+          {
+            "label": "C",
+            "title": "Polyester Lint Trap Dryer Filter Replacement Part Compatible With Bettervent Ind",
+            "brand": "AMI PARTS"
+          }
+        ],
+        "diagnosis": "BM25 #1 is C, model #1 is E; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.13, meaning score vs other candidates +0.11"
+      }
+    ],
+    "hurts": [
+      {
+        "query_id": 83639,
+        "query": "projectors",
+        "delta": -0.7064297093533586,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.2935702906466414,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "CK Global Brand Projector User Manual PDF Files for NEC NP-V260+ NP-V260JD",
+            "brand": "CK Global"
+          },
+          {
+            "label": "C",
+            "title": "Hologram Watch, 3D Hologram Smartphone Holographic Display Stands Projector 3.5-",
+            "brand": "Caredy"
+          },
+          {
+            "label": "C",
+            "title": "PPJ USB 2.0 Cable Cord A to B for Acer XD1150 DLP Projector, Acer PD726W PD726 D",
+            "brand": "PPJ"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "C",
+            "title": "USlingbi Universal Pyramid Display Projector, 3D Hologram Pyramid Display Projec",
+            "brand": "USlingbi"
+          },
+          {
+            "label": "C",
+            "title": "Hologram Watch, 3D Hologram Smartphone Holographic Display Stands Projector 3.5-",
+            "brand": "Caredy"
+          },
+          {
+            "label": "C",
+            "title": "Govt LP250 LCD Projector - D/Ship Only",
+            "brand": "InFocus"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is C; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates +0.11, meaning similar to title+bullets +0.10"
+      },
+      {
+        "query_id": 103031,
+        "query": "tidy die",
+        "delta": -0.6131471927654584,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.38685280723454163,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Cool Maker, Tidy Dye Station, Fashion Activity Kit for Kids Age 8 and Up",
+            "brand": "Cool Maker"
+          },
+          {
+            "label": "I",
+            "title": "TONIC STUDIOS Table Tidy-Single Pocket, Polyester, Multicoloured, 13 x 10 x 10.5",
+            "brand": "TONIC STUDIOS"
+          },
+          {
+            "label": "I",
+            "title": "The Icarus Line Must Die",
+            "brand": ""
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "TONIC STUDIOS Table Tidy-Single Pocket, Polyester, Multicoloured, 13 x 10 x 10.5",
+            "brand": "TONIC STUDIOS"
+          },
+          {
+            "label": "I",
+            "title": "TONIC STUDIOS Large Ring Binder Die Case, 4.4400000000000004 x 29.21 x 39.369999",
+            "brand": "TONIC STUDIOS"
+          },
+          {
+            "label": "I",
+            "title": "Gemini Tote Bag, Purple",
+            "brand": "Gemini"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates +0.06, meaning similar to title+bullets +0.03"
+      },
+      {
+        "query_id": 63049,
+        "query": "live not by lives",
+        "delta": -0.5676012204753175,
+        "bm25_ndcg": 0.9720065481442819,
+        "model_ndcg": 0.4044053276689644,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Live Not by Lies: A Manual for Christian Dissidents",
+            "brand": "Sentinel"
+          },
+          {
+            "label": "I",
+            "title": "Live Your Life, Not Your Diagnosis: How to Manage Stress and Live Well with Your",
+            "brand": "Morgan James Publishing"
+          },
+          {
+            "label": "I",
+            "title": "Life Is Not a Dress Rehearsal: Live, Love and Be Happy!",
+            "brand": ""
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Get Money: Live the Life You Want, Not Just the Life You Can Afford",
+            "brand": "Hachette Books"
+          },
+          {
+            "label": "I",
+            "title": "You Don't Need Anyone's Permission to Live Your Best Life!: A Real Talk Journey ",
+            "brand": ""
+          },
+          {
+            "label": "I",
+            "title": "I Will Not Die an Unlived Life: Reclaiming Purpose and Passion",
+            "brand": "Conari Press"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.10, meaning score vs other candidates +0.08"
+      },
+      {
+        "query_id": 112884,
+        "query": "womens brown snow pants",
+        "delta": -0.534620597697818,
+        "bm25_ndcg": 0.930090489974159,
+        "model_ndcg": 0.39546989227634105,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Arctix Women's Insulated Snow Pants, Black, Medium Tall",
+            "brand": "Arctix"
+          },
+          {
+            "label": "I",
+            "title": "Sorel Women's 1964 Premium CVS Snow Boot, Camel Brown, 8.5 M US",
+            "brand": "Sorel"
+          },
+          {
+            "label": "I",
+            "title": "DREAM PAIRS Women's DP-Avalanche Brown Faux Fur Lined Mid Calf Winter Snow Boots",
+            "brand": "DREAM PAIRS"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "DREAM PAIRS Women's DP-Avalanche Brown Faux Fur Lined Mid Calf Winter Snow Boots",
+            "brand": "DREAM PAIRS"
+          },
+          {
+            "label": "I",
+            "title": "Sorel Women's 1964 Premium CVS Snow Boot, Camel Brown, 8.5 M US",
+            "brand": "Sorel"
+          },
+          {
+            "label": "S",
+            "title": "PUMA Women's Fenty Sweatsuit Pant, Friar Brown, S",
+            "brand": "PUMA"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: colour conflicts with query +0.15, word overlap with title +0.05"
+      },
+      {
+        "query_id": 14937,
+        "query": "benjamin toy",
+        "delta": -0.517524440609245,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.48247555939075504,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Steiff 355257 Benjamin Bunny 26cm",
+            "brand": "Steiff"
+          },
+          {
+            "label": "E",
+            "title": "Accoutrements Benjamin Franklin Action Figure",
+            "brand": "Accoutrements"
+          },
+          {
+            "label": "I",
+            "title": "Child Benjamin Franklin Wig Standard",
+            "brand": "California Costumes"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "The Classic Tale of Benjamin Bunny",
+            "brand": "Applesauce Press"
+          },
+          {
+            "label": "I",
+            "title": "The Tale of Benjamin Bunny (Peter Rabbit)",
+            "brand": "Warne"
+          },
+          {
+            "label": "I",
+            "title": "Child Benjamin Franklin Wig Standard",
+            "brand": "California Costumes"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.08, meaning score vs other candidates +0.03"
+      },
+      {
+        "query_id": 54625,
+        "query": "iphone xr usb",
+        "delta": -0.5111928502357396,
+        "bm25_ndcg": 0.9688001977986836,
+        "model_ndcg": 0.4576073475629441,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Hirkase Micro USB Cable iPhone, 1M Nylon Braided Samsung USB Cable - Android Cha",
+            "brand": "Hirkase"
+          },
+          {
+            "label": "C",
+            "title": "2-Pack Universal Cable Bite, Mini Cartoon Charging Cable Protector for iPhone US",
+            "brand": "Edauto"
+          },
+          {
+            "label": "C",
+            "title": "2-Pack Universal Cable Bite, Mini Cartoon Charging Cable Protector for iPhone US",
+            "brand": "Edauto"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "C",
+            "title": "Car Charger DBHAWK New Dual USB Port Car Charger Multi - Function Head Car Charg",
+            "brand": "DBHAWK_Car Accessories"
+          },
+          {
+            "label": "C",
+            "title": "Dual Port USB Wall Charger, Tuscom USB Plug Power Adapter Travel Charger Chargin",
+            "brand": "Tuscom@"
+          },
+          {
+            "label": "C",
+            "title": "AxiBa USB C Car Charger, 12W 3.1A PowerDrive Speed+ Duo, 2 Port USB Car Charger ",
+            "brand": "AxiBa"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is C; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates +0.06, query words found anywhere +0.02"
+      },
+      {
+        "query_id": 53532,
+        "query": "insulated tumbler bulk",
+        "delta": -0.5008778507749441,
+        "bm25_ndcg": 0.9547645777364258,
+        "model_ndcg": 0.4538867269614817,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Fasclot Thermos Cup Wine Tumbler with Lid, Double Wall Vacuum Insulated Travel T",
+            "brand": "Fasclot"
+          },
+          {
+            "label": "C",
+            "title": "Celiy Hand Shank 30 Oz Stainless Steel Insulated Tumbler Mug Handle Home & Garde",
+            "brand": "Celiy"
+          },
+          {
+            "label": "I",
+            "title": "30oz Tumbler Handle (GREEN) by STRATA CUPS - Available For 30oz YETI Tumbler, OZ",
+            "brand": "STRATA CUPS"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Skinny Steel Cup Lid for 20 oz Tumblers",
+            "brand": "Maars\u00ae"
+          },
+          {
+            "label": "C",
+            "title": "Celiy Hand Shank 30 Oz Stainless Steel Insulated Tumbler Mug Handle Home & Garde",
+            "brand": "Celiy"
+          },
+          {
+            "label": "I",
+            "title": "30oz Tumbler Handle (GREEN) by STRATA CUPS - Available For 30oz YETI Tumbler, OZ",
+            "brand": "STRATA CUPS"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.10, keyword match in title +0.08"
+      },
+      {
+        "query_id": 101401,
+        "query": "tempered chocolate kit",
+        "delta": -0.5,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.5,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Wilton Chocolate Pro Melting Chocolate Candy Wafers for Chocolate Fountain, 2 lb",
+            "brand": "Wilton"
+          },
+          {
+            "label": "I",
+            "title": "Merckens Coating Melting Wafers Chocolate White 10 pounds",
+            "brand": "Merckens"
+          },
+          {
+            "label": "I",
+            "title": "DecoBros Crystal Tempered Glass Nespresso OriginalLine Storage Drawer Holder for",
+            "brand": "Deco Brothers"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Merckens Coating Melting Wafers Chocolate White 10 pounds",
+            "brand": "Merckens"
+          },
+          {
+            "label": "I",
+            "title": "Stainless Steel Double Boiler Pot for Melting Chocolate, Candy and Candle Making",
+            "brand": "SONGZIMING"
+          },
+          {
+            "label": "E",
+            "title": "Wilton Chocolate Pro Melting Chocolate Candy Wafers for Chocolate Fountain, 2 lb",
+            "brand": "Wilton"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: spelling-level overlap +0.04, keyword match in title +0.03"
+      },
+      {
+        "query_id": 86542,
+        "query": "red wood cross necklace",
+        "delta": -0.5,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.5,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Vibrant Red Green 20.5 Wood Beaded Children's Rosary",
+            "brand": "Roman"
+          },
+          {
+            "label": "I",
+            "title": "LiboboNew Fashion Wood Beads Bracelets Boho Small Elephant Charm Vintage Style J",
+            "brand": "Libobo_JEWELRY"
+          },
+          {
+            "label": "I",
+            "title": "Origami Folding Paper,Simplylin Children's Toys Manual DIY Stereoscopic Folding ",
+            "brand": "Simplylin_Bracelets"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "LiboboNew Fashion Wood Beads Bracelets Boho Small Elephant Charm Vintage Style J",
+            "brand": "Libobo_JEWELRY"
+          },
+          {
+            "label": "I",
+            "title": "Simplylin_Bracelets Needle Felting Kit by Handmade,Simplylin Cute Cat Pattern DI",
+            "brand": "Simplylin_Bracelets"
+          },
+          {
+            "label": "E",
+            "title": "Vibrant Red Green 20.5 Wood Beaded Children's Rosary",
+            "brand": "Roman"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: query words found anywhere +0.18, first query word in title -0.05"
+      },
+      {
+        "query_id": 107172,
+        "query": "usa wras",
+        "delta": -0.499023761911905,
+        "bm25_ndcg": 0.9594892343719019,
+        "model_ndcg": 0.4604654724599969,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Japanese American Resettlement through the Lens: Hikaru Iwasaki and the WRA's Ph",
+            "brand": "Brand: University Press of Colorado"
+          },
+          {
+            "label": "S",
+            "title": "Stargate - The Ark of Truth",
+            "brand": "TWENTIETH CENTURY FOX HOME ENT"
+          },
+          {
+            "label": "I",
+            "title": "Under Wraps",
+            "brand": "FAGERBAKKE,BILL"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Under Wraps",
+            "brand": "FAGERBAKKE,BILL"
+          },
+          {
+            "label": "S",
+            "title": "T-34: Russia's Armoured Spearhead (TankCraft)",
+            "brand": "Pen and Sword Military"
+          },
+          {
+            "label": "S",
+            "title": "The One and Only [Blu-ray]",
+            "brand": "OLIVE FILMS"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: spelling-level overlap +0.11, title length -0.05"
+      },
+      {
+        "query_id": 90546,
+        "query": "saphire",
+        "delta": -0.4942844275818756,
+        "bm25_ndcg": 0.9217638006200286,
+        "model_ndcg": 0.42747937303815303,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Peora Created Blue Sapphire with Genuine Diamond Pendant in 14K White Gold, Eleg",
+            "brand": "Peora"
+          },
+          {
+            "label": "E",
+            "title": "Amazon Essentials Sterling Silver Round Cut Created Blue Sapphire Birthstone Pen",
+            "brand": "Amazon Essentials"
+          },
+          {
+            "label": "I",
+            "title": "Saphir Natural Horsehair Shoe Brush for Leather Shining, Buffing & Cleaning",
+            "brand": "SAPHIR BEAUT\u00c9 DU CUIR"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Saphir Creme Surfine Cream Shoe Polish Black 50ml",
+            "brand": "SAPHIR"
+          },
+          {
+            "label": "I",
+            "title": "Saphir Medaille d'Or Pommadier Cream 75ml - Black",
+            "brand": "SAPHIR BEAUT\u00c9 DU CUIR"
+          },
+          {
+            "label": "I",
+            "title": "Sapphire & Steel: The Complete Series",
+            "brand": "SHOUT! FACTORY"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: spelling-level overlap +0.06, meaning score vs other candidates +0.04"
+      },
+      {
+        "query_id": 51056,
+        "query": "homegoing yaa gyasi paperback",
+        "delta": -0.48946450033256905,
+        "bm25_ndcg": 1.0,
+        "model_ndcg": 0.510535499667431,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Homegoing",
+            "brand": "Vintage"
+          },
+          {
+            "label": "C",
+            "title": "Summary of Homegoing: by Yaa Gyasi | Includes Analysis",
+            "brand": ""
+          },
+          {
+            "label": "C",
+            "title": "Homegoing by Yaa Gyasi (Book Analysis): Detailed Summary, Analysis and Reading G",
+            "brand": ""
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "C",
+            "title": "Summary of Homegoing: by Yaa Gyasi | Includes Analysis",
+            "brand": ""
+          },
+          {
+            "label": "C",
+            "title": "Homegoing by Yaa Gyasi (Book Analysis): Detailed Summary, Analysis and Reading G",
+            "brand": ""
+          },
+          {
+            "label": "E",
+            "title": "Homegoing",
+            "brand": "Vintage"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is C; model #1 vs BM25 #1 contribution gap: meaning similar to title+bullets +0.09, no brand listed -0.07"
+      },
+      {
+        "query_id": 48660,
+        "query": "halloween window boards",
+        "delta": -0.4703257491020718,
+        "bm25_ndcg": 0.9741581806265681,
+        "model_ndcg": 0.5038324315244963,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Fun World Haunted Window Boards Standard",
+            "brand": "Fun World"
+          },
+          {
+            "label": "I",
+            "title": "Halloween Window Clings Decoration Bats Spiders Weepa 68 Pcs Halloween Bat Spide",
+            "brand": "WEEPA"
+          },
+          {
+            "label": "I",
+            "title": "Holiday Designs Halloween and Fall Window Cling Decorations Set - 4 Large Sheet ",
+            "brand": "Holiday Designs"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Holiday Designs Halloween and Fall Window Cling Decorations Set - 4 Large Sheet ",
+            "brand": "Holiday Designs"
+          },
+          {
+            "label": "I",
+            "title": "Halloween Window Clings Decoration Bats Spiders Weepa 68 Pcs Halloween Bat Spide",
+            "brand": "WEEPA"
+          },
+          {
+            "label": "E",
+            "title": "Fun World Haunted Window Boards Standard",
+            "brand": "Fun World"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: spelling-level overlap -0.08, word overlap with title +0.05"
+      },
+      {
+        "query_id": 69316,
+        "query": "mini bikes for adults 200cc",
+        "delta": -0.4620379377617789,
+        "bm25_ndcg": 0.9828656408080284,
+        "model_ndcg": 0.5208277030462495,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "X-PRO 200cc Adult Gas Motorcycle Street Moped Scooter Lifan KPR 200 Fuel Injecti",
+            "brand": "Lifan"
+          },
+          {
+            "label": "S",
+            "title": "Massimo Motor MB200 196CC Engine Super Size Mini Moto Trail Bike MX Street for K",
+            "brand": "M MASSIMO MOTOR"
+          },
+          {
+            "label": "S",
+            "title": "Massimo Motor MB200 196CC Engine Super Size Mini Moto Trail Bike MX Street for K",
+            "brand": "M MASSIMO MOTOR"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "S",
+            "title": "125cc Dirt Bike Pit Bike Adults Dirtbikes Pitbikes 125 Dirt Pit Bike(Green)",
+            "brand": "APO"
+          },
+          {
+            "label": "S",
+            "title": "Massimo Motor MB200 196CC Engine Super Size Mini Moto Trail Bike MX Street for K",
+            "brand": "M MASSIMO MOTOR"
+          },
+          {
+            "label": "S",
+            "title": "110cc Dirt Bike Pit Bike Mini Gas Dirt Bike Kids Youth Dirt Bike Pit Bike 110cc ",
+            "brand": "X-PRO"
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is S; model #1 vs BM25 #1 contribution gap: spelling-level overlap +0.09, meaning similar to title+bullets +0.08"
+      },
+      {
+        "query_id": 107910,
+        "query": "vape juice",
+        "delta": -0.4526070936475072,
+        "bm25_ndcg": 0.9913510332471182,
+        "model_ndcg": 0.538743939599611,
+        "bm25_top3": [
+          {
+            "label": "E",
+            "title": "Capella SilverLine Fruit Circles Flavor Concentrate 13ml bottle",
+            "brand": "Capella"
+          },
+          {
+            "label": "S",
+            "title": "Capella Flavor Drops Kiwi Strawberry Concentrate 13ml",
+            "brand": ""
+          },
+          {
+            "label": "S",
+            "title": "Capella Flavor Drops Pink Lemonade Concentrate 13ml",
+            "brand": "Capella Flavors"
+          }
+        ],
+        "model_top3": [
+          {
+            "label": "I",
+            "title": "Chronic Remedy's Premium Hemp Cigarettes | Organic | 20ct Sealed Pack | Nicotine",
+            "brand": "Chronic Remedy"
+          },
+          {
+            "label": "S",
+            "title": "Capella Flavor Drops Pink Lemonade Concentrate 13ml",
+            "brand": "Capella Flavors"
+          },
+          {
+            "label": "S",
+            "title": "Capella Flavor Drops Kiwi Strawberry Concentrate 13ml",
+            "brand": ""
+          }
+        ],
+        "diagnosis": "BM25 #1 is E, model #1 is I; model #1 vs BM25 #1 contribution gap: meaning score vs other candidates +0.04, spelling-level overlap -0.02"
+      }
+    ]
+  }
+}

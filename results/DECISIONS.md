@@ -69,3 +69,12 @@ One numbered line per judgment call, with a one-line reason. Appended in build o
 58. Ablation and feature importance in Report 2 still use LambdaRank, as the spec names it for these analyses; the website inspector's contributions come from the chosen (pointwise) model — spec Phase 5 vs. §7 inspector.
 59. The cross-encoder throughput (pairs/s) is kept in `cv_results.json` but not printed in Report 2 — it varies between runs and would stop a rerun from reproducing the committed report byte for byte (which the freeze check requires).
 60. Report 2 was regenerated from the saved `cv_results.json` after that wording change, without retraining, and then committed as the freeze.
+
+## Phase 6: final test
+61. The test split was scored once (2026-10-20 08:42, Report 2 commit `3024bcb`, logged in `results/test_run_log.json`); `--report-only` re-runs only the analysis of the saved predictions — writing the report must not require touching the models again.
+62. All three model families were refit on the full training split with their frozen CV-selected settings so the test table compares them, but only the pre-chosen model is "the model" — spec Phase 6 asks for every method's metrics.
+63. Win / tie / loss uses |ΔnDCG| ≤ 1e-9 as a tie — exact equality up to floating-point noise.
+64. Per-category CIs bootstrap the queries of that category only (1,000 resamples, paired across methods within the category) — the CI must reflect the category's own sample size.
+65. The one-line diagnoses for the 15 best / 15 worst queries are generated mechanically (labels of each method's #1 plus the two largest contribution differences between them) — reproducible and not cherry-picked; the written interpretation is in `results/report_3_interpretation.md`.
+66. Two post-hoc checks (gain by candidate-list length; queries whose full text appears in a title) were run on the frozen predictions after seeing the results and are labelled post-hoc and descriptive in Report 3 — they did not change anything.
+67. `results/test_predictions.parquet` is written as the spec requires but not committed (`*.parquet` is git-ignored) — it contains ESCI labels, and data files stay out of git.

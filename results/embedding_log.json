@@ -13,5 +13,20 @@
     "new": 349267,
     "seconds": 3677.3,
     "texts_per_second": 95.0
+  },
+  "test/query": {
+    "new": 8956,
+    "seconds": 9.5,
+    "texts_per_second": 947.5
+  },
+  "test/title": {
+    "new": 128000,
+    "seconds": 525.5,
+    "texts_per_second": 243.6
+  },
+  "test/title_bullets": {
+    "new": 128573,
+    "seconds": 1358.2,
+    "texts_per_second": 94.7
   }
 }
