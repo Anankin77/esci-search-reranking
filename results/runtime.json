@@ -18,5 +18,9 @@
   "features_static_train": {
     "seconds": 656.5,
     "finished": "2026-10-20 07:38:27"
+  },
+  "baselines": {
+    "seconds": 17.9,
+    "finished": "2026-10-20 07:38:45"
   }
 }
